@@ -12,44 +12,54 @@ subspace solvers, and Lanczos tridiagonalization.
 
 We consider the linear system
 
-$$
-Ax=b,
-$$
+<p align="center">
+
+  $Ax=b,$
+
+</p>
 
 where
 
-$$
-A\in\mathbb{R}^{n\times n},
+<p align="center">
+
+  $A\in\mathbb{R}^{n\times n},
 \qquad
-b\in\mathbb{R}^{n}.
-$$
+b\in\mathbb{R}^{n}.$
+
+</p>
 
 Starting from an initial approximation $x_0$, we define the
 initial residual
 
-$$
-r_0=b-Ax_0.
-$$
+<p align="center">
+
+  $r_0=b-Ax_0.$
+
+</p>
 
 The Krylov subspace of dimension $m$ is
 
-$$
-\mathcal{K}_m(A,r_0)
+<p align="center">
+
+  $\mathcal{K}_m(A,r_0)
 =
-\operatorname{span}
+\mathrm{span}
 \left\{
 r_0,Ar_0,A^2r_0,\ldots,A^{m-1}r_0
-\right\}.
-$$
+\right\}.$
+
+</p>
 
 Krylov methods seek approximate solutions using information
 contained in these subspaces.
 
 Unless otherwise specified, we stop when
 
-$$
-\boxed{\|r_k\|_2\leq\varepsilon.}
-$$
+<p align="center">
+
+  $\boxed{\|r_k\|_2\leq\varepsilon.}$
+
+</p>
 
 Here, $\varepsilon>0$ is a prescribed absolute tolerance.
 
@@ -87,15 +97,15 @@ algorithmic steps, and numerical properties.
 The Steepest Descent method solves a symmetric positive-definite (SPD)
 linear system by minimizing the quadratic function
 
-$$
-f(x)=\frac12x^TAx-b^Tx.
-$$
+<p align="center">
+$f(x)=\frac12x^TAx-b^Tx.$
+</p>
 
 Its gradient is
 
-$$
-\nabla f(x)=Ax-b=-r.
-$$
+<p align="center">
+$\nabla f(x)=Ax-b=-r.$
+</p>
 
 Therefore, the residual $r_k$ gives the direction of
 steepest decrease of the objective function.
@@ -107,26 +117,26 @@ using an optimal step length.
 
 The search direction is
 
-$$
-p_k=r_k.
-$$
+<p align="center">
+$p_k=r_k.$
+</p>
 
 The optimal step length is
 
-$$
-\alpha_k=
-\frac{r_k^Tr_k}{r_k^TAr_k}.
-$$
+<p align="center">
+$\alpha_k=
+\frac{r_k^Tr_k}{r_k^TAr_k}.$
+</p>
 
 The solution and residual are updated by
 
-$$
-x_{k+1}=x_k+\alpha_kr_k,
-$$
+<p align="center">
+$x_{k+1}=x_k+\alpha_kr_k,$
+</p>
 
-$$
-r_{k+1}=r_k-\alpha_kAr_k.
-$$
+<p align="center">
+$r_{k+1}=r_k-\alpha_kAr_k.$
+</p>
 
 #### Algorithm
 
@@ -135,30 +145,36 @@ tolerance $\varepsilon$, maximum iterations $N$.
 
 1. Compute the initial residual:
 
-   $$
-   r_0=b-Ax_0.
-   $$
+   <p align="center">
+  $r_0=b-Ax_0.$
+   </p>
 
 2. For $k=0,1,\ldots,N-1$:
 
    - Check whether $\|r_k\|_2\leq\varepsilon$.
    - Compute
 
-     $$
-     \alpha_k=\frac{r_k^Tr_k}{r_k^TAr_k}.
-     $$
+     <p align="center">
+
+  $\alpha_k=\frac{r_k^Tr_k}{r_k^TAr_k}.$
+
+</p>
 
    - Update
 
-     $$
-     x_{k+1}=x_k+\alpha_kr_k.
-     $$
+     <p align="center">
+
+  $x_{k+1}=x_k+\alpha_kr_k.$
+
+</p>
 
    - Update the residual
 
-     $$
-     r_{k+1}=r_k-\alpha_kAr_k.
-     $$
+     <p align="center">
+
+  $r_{k+1}=r_k-\alpha_kAr_k.$
+
+</p>
 
 3. Return the approximate solution and convergence history.
 
@@ -188,10 +204,12 @@ conjugate with respect to the matrix $A$.
 
 Two directions $p_i$ and $p_j$ are $A$-conjugate if
 
-$$
-p_i^TAp_j=0,
-\qquad i\neq j.
-$$
+<p align="center">
+
+  $p_i^TAp_j=0,
+\qquad i\neq j.$
+
+</p>
 
 Instead of repeatedly minimizing along the residual direction,
 CG combines the current residual with the previous search
@@ -204,43 +222,55 @@ of the error.
 
 Initialize
 
-$$
-r_0=b-Ax_0,
+<p align="center">
+
+  $r_0=b-Ax_0,
 \qquad
-p_0=r_0.
-$$
+p_0=r_0.$
+
+</p>
 
 At iteration $k$, compute
 
-$$
-\alpha_k=
-\frac{r_k^Tr_k}{p_k^TAp_k}.
-$$
+<p align="center">
+
+  $\alpha_k=
+\frac{r_k^Tr_k}{p_k^TAp_k}.$
+
+</p>
 
 Update the approximation:
 
-$$
-x_{k+1}=x_k+\alpha_kp_k.
-$$
+<p align="center">
+
+  $x_{k+1}=x_k+\alpha_kp_k.$
+
+</p>
 
 Update the residual:
 
-$$
-r_{k+1}=r_k-\alpha_kAp_k.
-$$
+<p align="center">
+
+  $r_{k+1}=r_k-\alpha_kAp_k.$
+
+</p>
 
 Compute
 
-$$
-\beta_k=
-\frac{r_{k+1}^Tr_{k+1}}{r_k^Tr_k}.
-$$
+<p align="center">
+
+  $\beta_k=
+\frac{r_{k+1}^Tr_{k+1}}{r_k^Tr_k}.$
+
+</p>
 
 Finally, update the search direction:
 
-$$
-p_{k+1}=r_{k+1}+\beta_kp_k.
-$$
+<p align="center">
+
+  $p_{k+1}=r_{k+1}+\beta_kp_k.$
+
+</p>
 
 #### Algorithm
 
@@ -249,9 +279,11 @@ tolerance $\varepsilon$, maximum iterations $N$.
 
 1. Initialize
 
-   $$
-   r_0=b-Ax_0,\qquad p_0=r_0.
-   $$
+   <p align="center">
+
+  $r_0=b-Ax_0,\qquad p_0=r_0.$
+
+</p>
 
 2. For $k=0,1,\ldots,N-1$:
 
@@ -275,9 +307,11 @@ tolerance $\varepsilon$, maximum iterations $N$.
 
 CG minimizes the error in the energy norm
 
-$$
-\|e_k\|_A=\sqrt{e_k^TAe_k},
-$$
+<p align="center">
+
+  $\|e_k\|_A=\sqrt{e_k^TAe_k},$
+
+</p>
 
 where $e_k=x^\ast-x_k$.
 
@@ -299,12 +333,14 @@ linear systems without requiring the matrix to be symmetric.
 
 The method constructs a sequence of Krylov subspaces
 
-$$
-\mathcal K_m(A,r_0)
+<p align="center">
+
+  $\mathcal K_m(A,r_0)
 =
 \operatorname{span}
-\{r_0,Ar_0,\ldots,A^{m-1}r_0\}.
-$$
+\{r_0,Ar_0,\ldots,A^{m-1}r_0\}.$
+
+</p>
 
 At each iteration, GMRES finds the approximation that
 minimizes the residual norm over the current affine
@@ -314,21 +350,27 @@ Krylov subspace.
 
 Starting from
 
-$$
-v_1=\frac{r_0}{\|r_0\|_2},
-$$
+<p align="center">
+
+  $v_1=\frac{r_0}{\|r_0\|_2},$
+
+</p>
 
 the Arnoldi process constructs orthonormal vectors
 
-$$
-V_m=[v_1,\ldots,v_m].
-$$
+<p align="center">
+
+  $V_m=[v_1,\ldots,v_m].$
+
+</p>
 
 These vectors satisfy
 
-$$
-AV_m=V_{m+1}\overline H_m,
-$$
+<p align="center">
+
+  $AV_m=V_{m+1}\overline H_m,$
+
+</p>
 
 where $\overline H_m$ is an upper Hessenberg matrix.
 
@@ -336,25 +378,31 @@ where $\overline H_m$ is an upper Hessenberg matrix.
 
 The approximate solution has the form
 
-$$
-x_m=x_0+V_my_m.
-$$
+<p align="center">
+
+  $x_m=x_0+V_my_m.$
+
+</p>
 
 The vector $y_m$ solves the least-squares problem
 
-$$
-y_m=
+<p align="center">
+
+  $y_m=
 \underset{y\in\mathbb R^m}{\operatorname{argmin}}
 \left\|
 \beta e_1-\overline H_my
-\right\|_2,
-$$
+\right\|_2,$
+
+</p>
 
 where
 
-$$
-\beta=\|r_0\|_2.
-$$
+<p align="center">
+
+  $\beta=\|r_0\|_2.$
+
+</p>
 
 #### Algorithm
 
@@ -363,16 +411,20 @@ tolerance $\varepsilon$, maximum iterations $N$.
 
 1. Compute
 
-   $$
-   r_0=b-Ax_0,\qquad
-   \beta=\|r_0\|_2.
-   $$
+   <p align="center">
+
+  $r_0=b-Ax_0,\qquad
+   \beta=\|r_0\|_2.$
+
+</p>
 
 2. Initialize
 
-   $$
-   v_1=r_0/\beta.
-   $$
+   <p align="center">
+
+  $v_1=r_0/\beta.$
+
+</p>
 
 3. For $k=1,2,\ldots,N$:
 
@@ -424,86 +476,110 @@ relations and does not store an expanding Krylov basis.
 
 Let
 
-$$
-r_0=b-Ax_0.
-$$
+<p align="center">
+
+  $r_0=b-Ax_0.$
+
+</p>
 
 Choose a fixed shadow residual $\widehat r_0$
 such that
 
-$$
-\widehat r_0^Tr_0\neq0.
-$$
+<p align="center">
+
+  $\widehat r_0^Tr_0\neq0.$
+
+</p>
 
 Define
 
-$$
-\rho_k=\widehat r_0^Tr_k.
-$$
+<p align="center">
+
+  $\rho_k=\widehat r_0^Tr_k.$
+
+</p>
 
 At each iteration, construct a search direction $p_k$
 and compute
 
-$$
-v_k=Ap_k.
-$$
+<p align="center">
+
+  $v_k=Ap_k.$
+
+</p>
 
 The first step length is
 
-$$
-\alpha_k=
-\frac{\rho_k}{\widehat r_0^Tv_k}.
-$$
+<p align="center">
+
+  $\alpha_k=
+\frac{\rho_k}{\widehat r_0^Tv_k}.$
+
+</p>
 
 Compute the intermediate residual
 
-$$
-s_k=r_k-\alpha_kv_k.
-$$
+<p align="center">
+
+  $s_k=r_k-\alpha_kv_k.$
+
+</p>
 
 Then define
 
-$$
-t_k=As_k
-$$
+<p align="center">
+
+  $t_k=As_k$
+
+</p>
 
 and the stabilization parameter
 
-$$
-\omega_k=
-\frac{t_k^Ts_k}{t_k^Tt_k}.
-$$
+<p align="center">
+
+  $\omega_k=
+\frac{t_k^Ts_k}{t_k^Tt_k}.$
+
+</p>
 
 Update the solution:
 
-$$
-x_{k+1}
+<p align="center">
+
+  $x_{k+1}
 =
-x_k+\alpha_kp_k+\omega_ks_k.
-$$
+x_k+\alpha_kp_k+\omega_ks_k.$
+
+</p>
 
 Update the residual:
 
-$$
-r_{k+1}=s_k-\omega_kt_k.
-$$
+<p align="center">
+
+  $r_{k+1}=s_k-\omega_kt_k.$
+
+</p>
 
 The next search direction is obtained using
 
-$$
-\beta_k
+<p align="center">
+
+  $\beta_k
 =
 \frac{\rho_{k+1}}{\rho_k}
-\frac{\alpha_k}{\omega_k},
-$$
+\frac{\alpha_k}{\omega_k},$
 
-$$
-p_{k+1}
+</p>
+
+<p align="center">
+
+  $p_{k+1}
 =
 r_{k+1}
 +
-\beta_k(p_k-\omega_kv_k).
-$$
+\beta_k(p_k-\omega_kv_k).$
+
+</p>
 
 #### Algorithm
 
@@ -557,71 +633,93 @@ approximation and Krylov projection methods.
 
 Let
 
-$$
-r_0=b-Ax_0,
+<p align="center">
+
+  $r_0=b-Ax_0,
 \qquad
-\beta_0=\|r_0\|_2.
-$$
+\beta_0=\|r_0\|_2.$
+
+</p>
 
 Initialize
 
-$$
-v_1=\frac{r_0}{\beta_0},
+<p align="center">
+
+  $v_1=\frac{r_0}{\beta_0},
 \qquad
-v_0=0.
-$$
+v_0=0.$
+
+</p>
 
 The Lanczos recurrence is
 
-$$
-w_k=Av_k-\beta_{k-1}v_{k-1},
-$$
+<p align="center">
 
-$$
-\alpha_k=v_k^Tw_k,
-$$
+  $w_k=Av_k-\beta_{k-1}v_{k-1},$
 
-$$
-w_k\leftarrow w_k-\alpha_kv_k,
-$$
+</p>
 
-$$
-\beta_k=\|w_k\|_2,
-$$
+<p align="center">
 
-$$
-v_{k+1}=\frac{w_k}{\beta_k}.
-$$
+  $\alpha_k=v_k^Tw_k,$
+
+</p>
+
+<p align="center">
+
+  $w_k\leftarrow w_k-\alpha_kv_k,$
+
+</p>
+
+<p align="center">
+
+  $\beta_k=\|w_k\|_2,$
+
+</p>
+
+<p align="center">
+
+  $v_{k+1}=\frac{w_k}{\beta_k}.$
+
+</p>
 
 The generated vectors form the matrix
 
-$$
-V_m=[v_1,\ldots,v_m].
-$$
+<p align="center">
+
+  $V_m=[v_1,\ldots,v_m].$
+
+</p>
 
 The tridiagonal matrix is
 
-$$
-T_m=
+<p align="center">
+
+  $T_m=
 \begin{pmatrix}
 \alpha_1 & \beta_1 & & \\
 \beta_1 & \alpha_2 & \ddots & \\
 & \ddots & \ddots & \beta_{m-1}\\
 & & \beta_{m-1} & \alpha_m
-\end{pmatrix}.
-$$
+\end{pmatrix}.$
+
+</p>
 
 It satisfies
 
-$$
-T_m=V_m^TAV_m.
-$$
+<p align="center">
+
+  $T_m=V_m^TAV_m.$
+
+</p>
 
 In exact arithmetic, the Lanczos vectors are orthonormal:
 
-$$
-V_m^TV_m=I_m.
-$$
+<p align="center">
+
+  $V_m^TV_m=I_m.$
+
+</p>
 
 #### Ritz values
 
@@ -638,15 +736,19 @@ from a smaller matrix.
 For a nonsingular projected matrix $T_m$, an
 approximate solution of $Ax=b$ can be constructed as
 
-$$
-x_m=x_0+V_my_m,
-$$
+<p align="center">
+
+  $x_m=x_0+V_my_m,$
+
+</p>
 
 where
 
-$$
-T_my_m=\beta_0e_1.
-$$
+<p align="center">
+
+  $T_my_m=\beta_0e_1.$
+
+</p>
 
 #### Algorithm
 
