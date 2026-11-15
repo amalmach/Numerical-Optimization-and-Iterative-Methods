@@ -13,28 +13,22 @@ subspace solvers, and Lanczos tridiagonalization.
 We consider the linear system
 
 <p align="center">
-
-  $Ax=b,$
-
+$Ax=b,$
 </p>
 
 where
 
 <p align="center">
-
-  $A\in\mathbb{R}^{n\times n},
+$A\in\mathbb{R}^{n\times n},
 \qquad
 b\in\mathbb{R}^{n}.$
-
 </p>
 
 Starting from an initial approximation $x_0$, we define the
 initial residual
 
 <p align="center">
-
-  $r_0=b-Ax_0.$
-
+$r_0=b-Ax_0.$
 </p>
 
 The Krylov subspace of dimension $m$ is
@@ -46,7 +40,6 @@ $\mathcal{K}_m(A,r_0)
 \left\{
 r_0,Ar_0,A^2r_0,\ldots,A^{m-1}r_0
 \right\}.$
-
 </p>
 
 Krylov methods seek approximate solutions using information
@@ -55,9 +48,7 @@ contained in these subspaces.
 Unless otherwise specified, we stop when
 
 <p align="center">
-
-  $\boxed{\|r_k\|_2\leq\varepsilon.}$
-
+$\boxed{\|r_k\|_2\leq\varepsilon.}$
 </p>
 
 Here, $\varepsilon>0$ is a prescribed absolute tolerance.
