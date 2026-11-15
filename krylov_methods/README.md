@@ -58,7 +58,7 @@ Here, $\varepsilon>0$ is a prescribed absolute tolerance.
 ## Implemented Algorithms
 
 | Algorithm | Main Idea | Python |
-|:---|:---|:---:|:---:|
+|:---|:---|:---:|
 | **Steepest Descent** | Iterative minimization along the residual direction | [Code](steepest_descent.py) |
 | **Conjugate Gradient** | Optimization along conjugate directions | [Code](conjugate_gradient.py) |
 | **GMRES** | Residual minimization over Krylov subspaces | [Code](gmres.py) |
