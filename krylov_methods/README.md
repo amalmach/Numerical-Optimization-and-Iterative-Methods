@@ -40,8 +40,7 @@ initial residual
 The Krylov subspace of dimension $m$ is
 
 <p align="center">
-
-  $\mathcal{K}_m(A,r_0)
+$\mathcal{K}_m(A,r_0)
 =
 \mathrm{span}
 \left\{
