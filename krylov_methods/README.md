@@ -57,13 +57,13 @@ Here, $\varepsilon>0$ is a prescribed absolute tolerance.
 
 ## Implemented Algorithms
 
-| Algorithm | Main Idea | Mathematical Description | Python |
+| Algorithm | Main Idea | Python |
 |:---|:---|:---:|:---:|
-| **Steepest Descent** | Iterative minimization along the residual direction | [Learn more](#1-steepest-descent-method) | [Code](steepest_descent.py) |
-| **Conjugate Gradient** | Optimization along conjugate directions | [Learn more](#2-conjugate-gradient-method) | [Code](conjugate_gradient.py) |
-| **GMRES** | Residual minimization over Krylov subspaces | [Learn more](#3-generalized-minimal-residual-gmres) | [Code](gmres.py) |
-| **BiCGSTAB** | Stabilized bi-conjugate gradient iterations | [Learn more](#4-bi-conjugate-gradient-stabilized-bicgstab) | [Code](bicgstab.py) |
-| **Symmetric Lanczos** | Orthogonal projection onto Krylov subspaces | [Learn more](#5-symmetric-lanczos-algorithm) | [Code](symmetric_lanczos.py) |
+| **Steepest Descent** | Iterative minimization along the residual direction | [Code](steepest_descent.py) |
+| **Conjugate Gradient** | Optimization along conjugate directions | [Code](conjugate_gradient.py) |
+| **GMRES** | Residual minimization over Krylov subspaces | [Code](gmres.py) |
+| **BiCGSTAB** | Stabilized bi-conjugate gradient iterations | [Code](bicgstab.py) |
+| **Symmetric Lanczos** | Orthogonal projection onto Krylov subspaces | [Code](symmetric_lanczos.py) |
 
 Steepest Descent is included as a baseline iterative method for
 comparison with Krylov subspace solvers.
