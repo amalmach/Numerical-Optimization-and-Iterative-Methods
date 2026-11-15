@@ -64,6 +64,7 @@ Here, $\varepsilon>0$ is a prescribed absolute tolerance.
 | **GMRES** | Residual minimization over Krylov subspaces | [Learn more](#3.generalized-minimal-residual-gmres) | [Code](gmres.py) |
 | **BiCGSTAB** | Stabilized bi-conjugate gradient iterations | [Learn more](#4.bi-conjugate-gradient-stabilized-bicgstab) | [Code](bicgstab.py) |
 | **Symmetric Lanczos** | Orthogonal projection onto Krylov subspaces | [Learn more](#5.symmetric-lanczos-algorithm) | [Code](symmetric_lanczos.py) |
+
 Steepest Descent is included as a baseline iterative method for
 comparison with Krylov subspace solvers.
 
