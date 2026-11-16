@@ -17,7 +17,7 @@ algorithms, restarted variants, and preconditioning techniques.
 
 ---
 
-# Modular GMRES Solver
+### Modular GMRES Solver
 
 | Module | Responsibility |
 |---|---|
@@ -973,8 +973,6 @@ and convergence status.
 </details>
 
 ---
-
-## Numerical Analysis
 
 <details>
 <summary><strong>10. Numerical Properties</strong></summary>

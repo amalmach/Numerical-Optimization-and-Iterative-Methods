@@ -207,7 +207,7 @@ spectral and numerical properties of the coefficient matrix $A$.
 For ill-conditioned linear systems, convergence may be slow,
 irregular, or affected by numerical stagnation.
 
-**Preconditioning** aims to improve convergence by replacing
+Preconditioning aims to improve convergence by replacing
 the original system with an equivalent system that is
 more favorable for iterative solution.
 
@@ -219,8 +219,6 @@ The objective is to accelerate convergence without
 explicitly computing the inverse of $A$.
 
 #### Right Preconditioning
-
-The implementation uses **right preconditioning**.
 
 Consider the original linear system
 
