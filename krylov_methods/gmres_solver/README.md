@@ -17,18 +17,44 @@ algorithms, restarted variants, and preconditioning techniques.
 
 ---
 
-### Modular GMRES Solver
+### Main Idea
 
-| Module | Responsibility |
+The **Generalized Minimal Residual (GMRES)** method is an iterative
+Krylov subspace algorithm for solving large linear systems of the form
+
+<p align="center">
+$Ax=b,$
+</p>
+
+where
+
+<p align="center">
+$A\in\mathbb{R}^{n\times n},\qquad b\in\mathbb{R}^{n}.$
+</p>
+
+Unlike Conjugate Gradient, GMRES does not require the coefficient
+matrix to be symmetric or positive definite.
+
+To construct an orthonormal basis of the Krylov subspace,
+GMRES uses the **Arnoldi iteration**, which transforms the
+original problem into a smaller least-squares problem.
+
+The resulting approximation is obtained by solving this
+reduced problem rather than directly solving the original
+linear system.
+
+### Files
+
+| File | Purpose |
 |---|---|
-| `arnoldi.py` | Modified Gram-Schmidt and optional reorthogonalization |
-| `hessenberg.py` | Hessenberg workspace and projection helper |
-| `givens.py` | Stable Givens rotations and right-hand-side updates |
-| `least_squares.py` | Reduced triangular solve with rank-deficient fallback |
-| `preconditioners.py` | Identity, Jacobi, exact LU, ILU, IC(0), SSOR, custom |
-| `GMRES.py` | Solver options, convergence, restarting, result metadata |
-| `example.py` | Executable usage examples |
-| `test_gmres.py` | Regression tests against SciPy |
+| [arnoldi.py](arnoldi.py) | Modified Gram-Schmidt and optional reorthogonalization |
+| [hessenberg.py](hessenberg.py) | Hessenberg workspace and projection helper |
+| [givens.py](givens.py) | Stable Givens rotations and right-hand-side updates |
+| [least_squares.py](least_squares.py) | Reduced triangular solve with rank-deficient fallback |
+| [preconditioners.py](preconditioners.py) | Identity, Jacobi, exact LU, ILU, IC(0), SSOR, custom |
+| [GMRES.py](GMRES.py) | Solver options, convergence, restarting, result metadata |
+| [example.py](example.py) | Executable usage examples |
+| [test_gmres.py](test_gmres.py) | Regression tests against SciPy |
 
 ---
 

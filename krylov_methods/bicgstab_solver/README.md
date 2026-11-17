@@ -48,10 +48,10 @@ Its main advantages include:
 
 | File | Purpose |
 |---|---|
-| `BiCGSTAB.py` | BiCGSTAB iterations, stopping criteria, residual history |
-| `preconditioners.py` | Jacobi, LU, ILU, IC(0), SSOR and custom inverse actions |
-| `test_bicgstab.py` | Numerical regression tests against SciPy |
-| `example.py` | Executable demonstration |
+| [BiCGSTAB.py](BiCGSTAB.py) | BiCGSTAB iterations, stopping criteria, residual history |
+| [preconditioners.py](preconditioners.py) | Jacobi, LU, ILU, IC(0), SSOR and custom inverse actions |
+| [test_bicgstab.py](test_bicgstab.py) | Numerical regression tests against SciPy |
+| [example.py](example.py) | Executable demonstration |
 
 ### Mathematical formulation
 
