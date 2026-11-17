@@ -315,7 +315,6 @@ The solver provides several preconditioning options.
 | Custom | `"custom"` | User-defined inverse action |
 
 ### Implementation:
-[BiCGSTAB.py](BiCGSTAB.py)
 
 Supports real and complex dense matrices, SciPy sparse matrices,
 `LinearOperator`, and callable matrix-vector products.

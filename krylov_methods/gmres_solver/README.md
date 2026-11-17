@@ -2,14 +2,6 @@
 
 # Generalized Minimal Residual (GMRES)
 
-The **Generalized Minimal Residual method (GMRES)** is a Krylov
-subspace iterative method for solving large, sparse, and generally
-nonsymmetric linear systems.
-
-GMRES constructs an orthonormal basis using the Arnoldi process
-and minimizes the Euclidean norm of the residual over successive
-Krylov subspaces.
-
 This document presents the mathematical foundations, numerical
 algorithms, restarted variants, and preconditioning techniques.
 
@@ -1062,10 +1054,6 @@ the accuracy of the approximation.
 
 ### Python Implementation
 
-**Implementation:** [gmres.py](../gmres.py)
-
-#### Run
-
 Install dependencies: `python -m pip install numpy scipy`.
 
 From the **directory containing** the `gmres_solver` folder:
@@ -1074,7 +1062,7 @@ From the **directory containing** the `gmres_solver` folder:
 python -m gmres_solver.example
 python -m unittest gmres_solver.test_gmres -v
 ```
-#### Usage
+Usage:
 
 ```python
 import numpy as np
