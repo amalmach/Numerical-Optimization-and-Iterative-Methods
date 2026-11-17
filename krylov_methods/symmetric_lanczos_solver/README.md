@@ -39,7 +39,7 @@ approximation and Krylov projection methods.
 For a symmetric matrix $A$ and nonzero starting vector $r_0=b-Ax_0$, let
 
 <p align="center">
-\beta_0=\|r_0\|_2,\qquad v_1=r_0/\beta_0,\qquad v_0=0.$
+$\beta_0=\|r_0\|_2,\qquad v_1=r_0/\beta_0,\qquad v_0=0.$
 </p>
 
 The Lanczos recurrence is (For $k=1,2,\ldots,m$):
