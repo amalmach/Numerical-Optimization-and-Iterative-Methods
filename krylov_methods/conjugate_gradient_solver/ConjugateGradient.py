@@ -5,7 +5,7 @@ import numpy as np
 from scipy import sparse
 from scipy.sparse.linalg import LinearOperator, aslinearoperator
 
-from .preconditioners import build_preconditioner
+from krylov_methods.preconditioners import make_preconditioner
 
 
 @dataclass
@@ -32,9 +32,18 @@ def solve_conjugate_gradient(
     Callable A is assumed to map vectors of length len(b) to the same length.
     Stopping threshold: max(atol, rtol*||b||_2).
     """
-    b = np.asarray(b).reshape(-1)
-    if b.ndim != 1 or not b.size or not np.issubdtype(b.dtype, np.number):
+    b = np.asarray(b)
+    if b.ndim not in (1, 2):
+        raise ValueError("b must be a vector.")
+    if b.ndim == 2 and 1 not in b.shape:
+        raise ValueError("b must have shape (n,), (n,1), or (1,n).")
+
+    b = b.reshape(-1)
+    if b.size == 0 or not np.issubdtype(b.dtype, np.number):
         raise ValueError("b must be a nonempty numerical vector.")
+    if not np.all(np.isfinite(b)):
+        raise ValueError("b must contain finite numerical values.")
+
     n = b.size
     if not np.isfinite(rtol) or not np.isfinite(atol) or rtol < 0 or atol < 0:
         raise ValueError("rtol and atol must be finite and nonnegative.")
@@ -54,11 +63,24 @@ def solve_conjugate_gradient(
 
     dtype = np.result_type(b.dtype, operator.dtype, float)
     b = b.astype(dtype, copy=False)
-    x = np.zeros(n, dtype=dtype) if x0 is None else np.asarray(x0, dtype=dtype).reshape(-1).copy()
-    if x.shape != (n,):
-        raise ValueError("x0 has incompatible shape.")
 
-    apply_M = build_preconditioner(explicit, preconditioner, M, preconditioner_options)
+    # Initial approximation
+    if x0 is None:
+        x = np.zeros(n, dtype=dtype)
+    else:
+        x = np.asarray(x0, dtype=dtype).reshape(-1).copy()
+        if x.size != n:
+            raise ValueError("x0 has incompatible shape.")
+    if not np.all(np.isfinite(x)):
+        raise ValueError("x0 must contain finite numerical values.")
+
+    apply_M = make_preconditioner(
+        explicit,
+        preconditioner,
+        M=M,
+        options=preconditioner_options,
+        require_spd=True,
+    )
     threshold = max(float(atol), float(rtol) * np.linalg.norm(b))
     residuals = []
     history = [] if store_history else None

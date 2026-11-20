@@ -19,9 +19,13 @@ def main():
                                   preconditioner="ilu")),
     ):
         result = gmres(A, b, rtol=1e-10, **options)
-        print(f"{label:22} converged={result.converged} "
-              f"iterations={result.iterations:3} "
-              f"true residual={result.residual_norm:.3e}")
+        print(
+            f"{label:22} "
+            f"converged={result.converged} "
+            f"iterations={result.iterations:3d} "
+            f"cycles={result.cycles:3d} "
+            f"true residual={result.residual_norm:.3e}"
+        )
 
 
 if __name__ == "__main__":

@@ -38,9 +38,59 @@ class TestConjugateGradient(unittest.TestCase):
     def test_ssor(self):
         self.check(self.A, preconditioner="ssor", preconditioner_options={"omega": 1.1})
 
+    def test_cholesky(self):
+        result = self.check(
+            self.A,
+            preconditioner="cholesky",
+        )
+        self.assertTrue(result.converged)
+        self.assertEqual(result.iterations, 1)
+        np.testing.assert_allclose(
+            result.solution,
+            np.linalg.solve(self.A, self.b),
+            rtol=1e-10,
+            atol=1e-12,
+        )
+
+    def test_ic0(self):
+        result = self.check(
+            self.A,
+            preconditioner="ic0",
+        )
+        self.assertTrue(result.converged)
+        np.testing.assert_allclose(
+            result.solution,
+            np.linalg.solve(self.A, self.b),
+            rtol=1e-10,
+            atol=1e-12,
+        )
+
     def test_custom(self):
         d = np.diag(self.A)
         self.check(self.A, preconditioner="custom", M=lambda r: r / d)
+
+    def test_custom_matrix(self):
+        M = np.diag(np.diag(self.A))
+        result = self.check(
+            self.A,
+            preconditioner="custom",
+            M=M,
+        )
+        self.assertTrue(result.converged)
+        np.testing.assert_allclose(
+            result.solution,
+            np.linalg.solve(self.A, self.b),
+            rtol=1e-10,
+            atol=1e-12,
+        )
+
+    def test_reject_ilu(self):
+        with self.assertRaises(ValueError):
+            solve_conjugate_gradient(
+                self.A,
+                self.b,
+                preconditioner="ilu",
+            )
 
     def test_complex_hermitian(self):
         A = np.array([[5., 1.+2.j], [1.-2.j, 6.]])
@@ -65,6 +115,41 @@ class TestConjugateGradient(unittest.TestCase):
         result = solve_conjugate_gradient(self.A, self.b, x0=x)
         self.assertTrue(result.converged)
         self.assertEqual(result.iterations, 0)
+
+    def test_complex_cholesky(self):
+        A = np.array([
+            [5.0, 1.0 + 2.0j],
+            [1.0 - 2.0j, 6.0],
+        ])
+
+        b = np.array([
+            1.0 + 1.0j,
+            -2.0j,
+        ])
+
+        result = solve_conjugate_gradient(
+            A,
+            b,
+            preconditioner="cholesky",
+            rtol=1e-12,
+        )
+
+        self.assertTrue(result.converged)
+
+        np.testing.assert_allclose(
+            result.solution,
+            np.linalg.solve(A, b),
+            rtol=1e-10,
+            atol=1e-12,
+        )
+
+    def test_invalid_tolerance(self):
+        with self.assertRaises(ValueError):
+            solve_conjugate_gradient(
+                self.A,
+                self.b,
+                rtol=-1e-8,
+            )
 
 
 if __name__ == "__main__":

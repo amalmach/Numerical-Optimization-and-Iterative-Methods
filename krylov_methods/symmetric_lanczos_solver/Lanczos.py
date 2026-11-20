@@ -2,7 +2,6 @@
 
 from dataclasses import dataclass
 import numpy as np
-from scipy import sparse
 from scipy.sparse.linalg import LinearOperator, aslinearoperator
 
 
@@ -40,12 +39,25 @@ def lanczos_tridiagonalize(A, v0, m=None, *, reorthogonalize=False, breakdown_to
     A must be Hermitian. Only explicit dense matrices are checked directly;
     the requirement is the caller's responsibility for other operators.
     """
-    v0 = np.asarray(v0).reshape(-1)
-    if v0.ndim != 1 or v0.size == 0 or not np.issubdtype(v0.dtype, np.number):
+    v0 = np.asarray(v0)
+    if v0.ndim not in (1, 2) or (v0.ndim == 2 and 1 not in v0.shape):
+        raise ValueError("v0 must have shape (n,), (n,1), or (1,n).")
+    v0 = v0.reshape(-1)
+    if v0.size == 0 or not np.issubdtype(v0.dtype, np.number):
         raise ValueError("v0 must be a nonempty numerical vector.")
+    if not np.all(np.isfinite(v0)):
+        raise ValueError("v0 must contain finite numerical values.")
     n = len(v0)
     if callable(A) and not isinstance(A, LinearOperator):
-        op = LinearOperator((n, n), matvec=A, dtype=np.result_type(v0.dtype, float))
+        # Probe once so a complex callable with a real starting vector is
+        # assigned a complex dtype rather than silently losing information.
+        probe = np.asarray(A(v0)).reshape(-1)
+        if probe.shape != (n,) or not np.all(np.isfinite(probe)):
+            raise ValueError("Callable A must return a finite vector of length n.")
+        op = LinearOperator(
+            (n, n), matvec=A,
+            dtype=np.result_type(v0.dtype, probe.dtype, float),
+        )
     else:
         op = aslinearoperator(A)
     if op.shape != (n, n):
@@ -54,7 +66,7 @@ def lanczos_tridiagonalize(A, v0, m=None, *, reorthogonalize=False, breakdown_to
         raise ValueError("A must be Hermitian.")
     if m is None:
         m = n
-    if not isinstance(m, (int, np.integer)) or m < 1:
+    if isinstance(m, (bool, np.bool_)) or not isinstance(m, (int, np.integer)) or m < 1:
         raise ValueError("m must be a positive integer.")
     m = min(int(m), n)
     if breakdown_tol is not None and (not np.isfinite(breakdown_tol) or breakdown_tol < 0):
@@ -78,9 +90,12 @@ def lanczos_tridiagonalize(A, v0, m=None, *, reorthogonalize=False, breakdown_to
 
     for j in range(m):
         V[:, j] = q
-        w = np.asarray(op.matvec(q), dtype=dtype).reshape(-1)
-        if w.shape != (n,) or not np.all(np.isfinite(w)):
+        Aq = np.asarray(op.matvec(q)).reshape(-1)
+        if Aq.shape != (n,) or not np.all(np.isfinite(Aq)):
             raise ArithmeticError("Invalid result from matrix-vector product.")
+        if np.iscomplexobj(Aq) and not np.issubdtype(dtype, np.complexfloating):
+            raise ValueError("Complex matrix-vector products require a complex operator dtype.")
+        w = np.asarray(Aq, dtype=dtype).copy()
         w -= previous_beta * old
         a = np.vdot(q, w)
         if abs(a.imag) > 1e-10 * max(1.0, abs(a.real)):
@@ -92,7 +107,7 @@ def lanczos_tridiagonalize(A, v0, m=None, *, reorthogonalize=False, breakdown_to
             for _ in range(2):
                 w -= Q @ (Q.conj().T @ w)
         beta_next = float(np.linalg.norm(w))
-        scale = max(1.0, float(np.linalg.norm(op.matvec(q))))
+        scale = max(1.0, float(np.linalg.norm(Aq)))
         threshold = (10 * np.finfo(float).eps * scale
                      if breakdown_tol is None else breakdown_tol)
         if beta_next <= threshold:

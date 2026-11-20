@@ -24,6 +24,13 @@ For a symmetric positive-definite matrix $A$, CG solves $Ax=b$ by minimizing
 the quadratic energy $f(x)=\frac12 x^TAx-b^Tx$ over the affine Krylov space
 $x_0+\mathcal K_k(A,r_0)$.
 
+Unlike GMRES, which minimizes the Euclidean residual norm,
+CG minimizes the error in the energy norm associated with $A$.
+
+For a symmetric positive-definite matrix, this is equivalent
+to minimizing the quadratic objective function over the
+current affine Krylov subspace.
+
 Instead of repeatedly minimizing along the residual direction,
 CG combines the current residual with the previous search
 direction.
@@ -36,7 +43,7 @@ of the error.
 | File | Purpose |
 |:---|:---|
 | [ConjugateGradient.py](ConjugateGradient.py) | CG/PCG implementation and structured result |
-| [preconditioners.py](preconditioners.py) | Jacobi, Cholesky, SSOR, and custom inverse actions |
+| [Preconditioners](../preconditioners/preconditioners.py) | Shared Preconditioner implementations |
 | [test_conjugate_gradient.py](test_conjugate_gradient.py) | Numerical regression tests against SciPy |
 | [example.py](example.py) | Reproducible numerical demonstration |
 
@@ -85,6 +92,12 @@ $p_{k+1}=r_{k+1}+\beta_kp_k.$
 Stop when the true residual meets the prescribed tolerance.
 In exact arithmetic, CG converges in at most $n$ steps.
 
+> **Note — Complex Hermitian systems:** The Conjugate Gradient
+> method also applies to complex Hermitian positive-definite
+> matrices. In this case, transposes $p_i^T$ are replaced by
+> conjugate transposes $p_i^H$, and scalar products are
+> interpreted as Hermitian inner products.
+
 ### Algorithm
 
 **Input:** SPD matrix $A$, vector $b$, initial guess $x_0$,
@@ -108,7 +121,12 @@ $r_0=b-Ax_0,\qquad p_0=r_0.$
 
 3. Return the approximate solution and convergence history.
 
-### Preconditioned CG 
+### Preconditioned CG
+
+For descriptions of the available preconditioning techniques,
+their mathematical formulations, and their numerical properties,
+see the [Preconditioning Methods](../preconditioners/README.md)
+documentation.
 
 For a *fixed symmetric positive-definite* preconditioner $M$, replace the
 residual search direction with the inverse preconditioner action:
@@ -154,25 +172,44 @@ For complex systems, transpose products become Hermitian inner products.
 CG minimizes the error in the energy norm
 
 <p align="center">
-$\|e_k\|_A=\sqrt{e_k^TAe_k},$
+$\displaystyle
+\|e_k\|_A=\sqrt{e_k^HAe_k},
+$
 </p>
 
 where $e_k=x^\ast-x_k$.
+
+For real-valued systems, the conjugate transpose $e_k^H$
+reduces to the ordinary transpose $e_k^T$.
 
 ### Python interface
 
 ```python
 import numpy as np
-from conjugate_gradient_solver import solve_conjugate_gradient
 
-A = np.array([[4., 1.], [1., 3.]])
-b = np.array([1., 2.])
-result = solve_conjugate_gradient(A, b, rtol=1e-10, preconditioner="jacobi")
-print(result.converged, result.iterations, result.solution)
+from krylov_methods.conjugate_gradient_solver import solve_conjugate_gradient
+
+A = np.array([
+    [4.0, 1.0],
+    [1.0, 3.0],
+])
+
+b = np.array([1.0, 2.0])
+
+result = solve_conjugate_gradient(
+    A,
+    b,
+    rtol=1e-10,
+    preconditioner="jacobi",
+)
+
+print("Converged:", result.converged)
+print("Iterations:", result.iterations)
+print("Solution:", result.solution)
+print("Final residual:", result.residual_norms[-1])
 ```
 
-The example assumes execution from the directory **containing**
-`conjugate_gradient_solver/`, or that this directory is on Python's import path.
+The following examples and commands should be executed from the repository root.
 
 The solver accepts dense/sparse arrays, SciPy `LinearOperator`, or a callable
 matrix-vector product, and real SPD or complex Hermitian positive-definite
@@ -185,18 +222,27 @@ The stopping condition is
 $\displaystyle \|b-Ax_k\|_2\leq\max(\mathrm{atol},\mathrm{rtol}\|b\|_2).$
 </p>
 
-Available preconditioners: `None`, `"jacobi"`, `"ssor"`, `"cholesky"`, and
-`"custom"`. A custom inverse action must be *fixed Hermitian positive
-definite*. For large sparse problems, a dense Cholesky or SSOR implementation
-may be inappropriate; custom sparse SPD preconditioning is preferred.
+Available preconditioners: `None`, `"jacobi"`, `"ssor"`,
+`"cholesky"`, `"ic0"` (real SPD systems), and `"custom"`.
+
+All preconditioners used with CG must define a fixed Hermitian
+positive-definite inverse action.
+
+For mathematical formulations and implementation details, see the
+[Preconditioning Methods](../preconditioners/README.md) documentation.
+
+Exact Cholesky and the educational IC(0) implementation use
+dense intermediate storage and may be unsuitable for large
+sparse systems. For large-scale problems, appropriate sparse
+SPD preconditioning techniques are recommended.
 
 Install dependencies: `python -m pip install numpy scipy`.
 
-From the directory containing this package:
+From the repository root (the directory containing `krylov_methods/`):
 
 ```bash
-python -m unittest conjugate_gradient_solver.test_conjugate_gradient -v
-python -m conjugate_gradient_solver.example
+python3 -m unittest krylov_methods.conjugate_gradient_solver.test_conjugate_gradient -v
+python3 -m krylov_methods.conjugate_gradient_solver.example
 ```
 
 ### References

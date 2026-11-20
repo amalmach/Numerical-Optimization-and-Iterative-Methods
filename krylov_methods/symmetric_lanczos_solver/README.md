@@ -9,21 +9,22 @@ matrices, with an optional Galerkin approximation to linear systems.
 
 ### Main idea
 
-Lanczos is a Krylov subspace algorithm, but primarily a basis construction
-and tridiagonalization procedure, *not* itself a general-purpose linear solver.
-Its symmetric tridiagonal projection is useful for eigenvalue estimation and
-underlies linear solvers such as CG and MINRES.
+The **Symmetric Lanczos algorithm** is a Krylov subspace method
+that constructs an orthonormal basis associated with a real
+symmetric or complex Hermitian matrix.
 
-The Symmetric Lanczos algorithm constructs an
-orthonormal basis of a Krylov subspace associated
-with a symmetric matrix.
+Its principal objective is to project a large matrix onto a
+smaller symmetric tridiagonal matrix.
 
-Its principal objective is to transform a large
-symmetric matrix into a smaller symmetric
-tridiagonal matrix.
+This projection enables efficient approximation of eigenvalues
+and provides the mathematical foundation for iterative solvers
+such as Conjugate Gradient (CG) and MINRES.
 
-This transformation is useful for eigenvalue
-approximation and Krylov projection methods.
+Lanczos is primarily a **basis construction and tridiagonalization
+algorithm**, rather than a general-purpose linear-system solver.
+
+However, the generated Krylov basis can also be used to construct
+a Galerkin approximation to the solution of a linear system.
 
 ### Files
 
@@ -36,10 +37,27 @@ approximation and Krylov projection methods.
 
 ### Mathematical formulation
 
-For a symmetric matrix $A$ and nonzero starting vector $r_0=b-Ax_0$, let
+Let $A$ be a real symmetric or complex Hermitian matrix,
+and let $q$ be a nonzero starting vector.
+
+For eigenvalue approximation, $q$ may be chosen arbitrarily.
+For a Galerkin approximation to $Ax=b$, a natural choice is
 
 <p align="center">
-$\beta_0=\|r_0\|_2,\qquad v_1=r_0/\beta_0,\qquad v_0=0.$
+$\displaystyle q=r_0=b-Ax_0.$
+</p>
+
+Initialize
+
+<p align="center">
+$\displaystyle
+\gamma=\|q\|_2,
+\qquad
+v_1=\frac{q}{\gamma},
+\qquad
+v_0=0,
+\qquad
+\beta_0=0.$
 </p>
 
 The Lanczos recurrence is (For $k=1,2,\ldots,m$):
@@ -49,7 +67,7 @@ $w_k=Av_k-\beta_{k-1}v_{k-1},$
 </p>
 
 <p align="center">
-$\alpha_k=v_k^Tw_k,$
+$\displaystyle \alpha_k=v_k^Hw_k.$
 </p>
 
 <p align="center">
@@ -84,24 +102,71 @@ T_m =
 It satisfies
 
 <p align="center">
-$T_m=V_m^TAV_m.$
+$\displaystyle T_m=V_m^HAV_m.$
 </p>
 
 In exact arithmetic, the Lanczos vectors are orthonormal:
 
 <p align="center">
-$V_m^TV_m=I_m.$
+$\displaystyle V_m^HV_m=I_m.$
 </p>
 
-#### Ritz values
+> **Note — Complex Hermitian systems:** For complex-valued matrices,
+> $V_m^H$ denotes the conjugate transpose. For real-valued matrices,
+> the conjugate transpose reduces to the ordinary transpose.
 
-The eigenvalues of $T_m$ are called Ritz values.
+#### Ritz values and Ritz vectors
 
-They approximate eigenvalues of the original
-matrix $A$.
+The eigenvalues of the projected tridiagonal matrix $T_m$
+are called **Ritz values**.
 
-This allows spectral information to be extracted
-from a smaller matrix.
+Let
+
+<p align="center">
+$\displaystyle
+T_my_i=\theta_i y_i.
+$
+</p>
+
+Then $\theta_i$ is a Ritz value, and
+
+<p align="center">
+$\displaystyle
+u_i=V_my_i
+$
+</p>
+
+is the corresponding Ritz vector.
+
+The Ritz pair $(\theta_i,u_i)$ approximates an eigenpair
+of the original matrix $A$.
+
+The quality of this approximation can be measured using
+the eigenvalue residual
+
+<p align="center">
+$\displaystyle
+\|Au_i-\theta_i u_i\|_2.
+$
+</p>
+
+Using the Lanczos relation, we obtain
+
+<p align="center">
+$\displaystyle
+\|Au_i-\theta_i u_i\|_2
+=
+|\beta_m|\,|e_m^Ty_i|.
+$
+</p>
+
+This relation holds for the classical Lanczos recurrence
+in exact arithmetic. In finite precision, the residual
+may differ slightly because of rounding and
+reorthogonalization corrections.
+
+A small Ritz-pair residual indicates that the corresponding
+Ritz pair is a good approximate eigenpair.
 
 #### Galerkin approximation
 
@@ -109,49 +174,168 @@ For a nonsingular projected matrix $T_m$, an
 approximate solution of $Ax=b$ can be constructed as
 
 <p align="center">
-$x_m=x_0+V_my_m,$
+$\displaystyle
+x_m=x_0+V_my_m.
+$
 </p>
 
 where
 
 <p align="center">
-$T_my_m=\beta_0e_1.$
+$\displaystyle
+T_my_m=\gamma e_1,
+\qquad
+\gamma=\|b-Ax_0\|_2.
+$
 </p>
 
-For indefinite $A$, the projected $T_m$ can be singular even when $A$ is
-nonsingular. This module reports that case; use MINRES for robust symmetric
-indefinite linear solves. For eigenvalue exploration, use tridiagonalization
-without requiring the Galerkin linear system to be solvable.
+The Galerkin approximation imposes the orthogonality condition
 
+<p align="center">
+$\displaystyle
+V_m^H(b-Ax_m)=0.
+$
+</p>
+
+This means that the residual is orthogonal to the
+Krylov subspace used to construct the approximation.
+
+For symmetric positive-definite systems, the projected matrix
+$T_m$ is also positive definite.
+
+For indefinite systems, $T_m$ may be singular or ill-conditioned,
+even when the original matrix $A$ is nonsingular.
+
+In such cases, the Galerkin approximation may fail or become
+numerically inaccurate.
+
+For robust symmetric indefinite linear-system solving,
+methods such as MINRES are generally preferable.
+
+For eigenvalue exploration, Lanczos tridiagonalization
+can still be used without solving the projected
+Galerkin system.
 
 ### Algorithm
 
-**Input:** Symmetric matrix $A$, vector $b$,
-initial guess $x_0$, Krylov dimension $m$.
+**Input:** Hermitian matrix or linear operator $A$,
+nonzero starting vector $q$, maximum Krylov dimension $m$.
 
-1. Compute the initial residual $r_0$.
-2. Normalize it to obtain the first Lanczos vector $v_0$.
-3. For $k=1,\ldots,m$:
-   - Apply the matrix $A$ to the current Lanczos vector $v_{k-1}$.
-   - Subtract the contribution of the previous vector to obtain $ w_k$.
-   - Compute the diagonal coefficient $\alpha_k$.
-   - Remove the component along the current vector in $w_k$.
-   - Compute the off-diagonal coefficient $\beta_k$.
-   - Normalize to obtain the next Lanczos vector.
-4. Construct the tridiagonal matrix $T_m$.
-5. Compute Ritz eigenvalues or a Galerkin approximation.
-6. Optionally solve the Galerkin system for an approximate solution to $Ax=b$.
+**Output:** Orthonormal Lanczos basis $V_m$,
+tridiagonal projection $T_m$, and Ritz values.
+
+1. **Initialization**
+
+   Compute
+
+   <p align="center">
+   $\displaystyle
+   v_1=\frac{q}{\|q\|_2},
+   \qquad
+   v_0=0,
+   \qquad
+   \beta_0=0.
+   $
+   </p>
+
+2. **Lanczos iterations**
+
+   For $k=1,\ldots,m$:
+
+   - Compute the matrix-vector product
+
+     <p align="center">
+     $\displaystyle
+     w_k=Av_k-\beta_{k-1}v_{k-1}.
+     $
+     </p>
+
+   - Compute the diagonal coefficient
+
+     <p align="center">
+     $\displaystyle
+     \alpha_k=v_k^Hw_k.
+     $
+     </p>
+
+   - Remove the component along the current vector
+
+     <p align="center">
+     $\displaystyle
+     w_k\leftarrow w_k-\alpha_kv_k.
+     $
+     </p>
+
+   - Optionally apply full reorthogonalization.
+
+   - Compute the next coefficient
+
+     <p align="center">
+     $\displaystyle
+     \beta_k=\|w_k\|_2.
+     $
+     </p>
+
+   - If $\beta_k$ is numerically zero, terminate
+     because the Krylov subspace cannot expand further.
+
+   - Otherwise, construct the next Lanczos vector
+
+     <p align="center">
+     $\displaystyle
+     v_{k+1}=\frac{w_k}{\beta_k}.
+     $
+     </p>
+
+3. **Construct the projection**
+
+   Assemble the symmetric tridiagonal matrix $T_m$
+   from the coefficients $\alpha_k$ and $\beta_k$.
+
+4. **Compute Ritz values**
+
+   Compute the eigenvalues of $T_m$.
+
+5. **Optional Galerkin approximation**
+
+   If the starting vector is $q=b-Ax_0$ and the
+   projected matrix is nonsingular, construct
+   an approximate solution of $Ax=b$.
 
 
 ### Numerical properties
 
-- Requires a symmetric matrix.
+- Requires a real symmetric or complex Hermitian matrix.
+- Constructs an orthonormal Krylov basis in exact arithmetic.
 - Uses a three-term recurrence.
-- Produces a symmetric tridiagonal projection.
-- Useful for approximating eigenvalues.
-- May lose orthogonality in finite precision.
-- A singular projected matrix can prevent the
-  Galerkin linear-system approximation.
+- Produces a real symmetric tridiagonal projection.
+- Approximates eigenvalues through Ritz values.
+- May lose orthogonality in finite-precision arithmetic.
+- Supports optional full reorthogonalization.
+- Detects numerical breakdown when the next Lanczos vector
+  becomes too small.
+- Can provide a Galerkin approximation to linear systems.
+- A singular or ill-conditioned projected matrix may prevent
+  an accurate Galerkin solution.
+
+**Reorthogonalization**
+
+In finite-precision arithmetic, Lanczos vectors may lose
+orthogonality as the iteration progresses.
+
+The implementation provides the option
+
+`reorthogonalize=True`
+
+to apply two passes of full reorthogonalization.
+
+This can improve basis orthogonality but increases
+computational cost and memory requirements.
+
+The classical tridiagonal Lanczos relation is exact in
+exact arithmetic without additional correction terms.
+With full reorthogonalization, small correction terms
+may affect this relation in finite precision.
 
 ### Python usage
 

@@ -18,13 +18,15 @@ BiCGSTAB is an iterative Krylov subspace method for solving
 nonsymmetric linear systems of the form
 
 <p align="center">
-$Ax=b,$
+$\displaystyle Ax=b,$
 </p>
 
 where
 
 <p align="center">
-$A\in\mathbb{R}^{n\times n},\qquad b\in\mathbb{R}^{n}.$
+$\displaystyle A\in\mathbb{F}^{n\times n},
+\qquad b\in\mathbb{F}^{n},
+\qquad \mathbb{F}\in\{\mathbb{R},\mathbb{C}\}.$
 </p>
 
 It combines ideas from the Bi-Conjugate Gradient method
@@ -49,7 +51,7 @@ Its main advantages include:
 | File | Purpose |
 |---|---|
 | [BiCGSTAB.py](BiCGSTAB.py) | BiCGSTAB iterations, stopping criteria, residual history |
-| [preconditioners.py](preconditioners.py) | Jacobi, LU, ILU, IC(0), SSOR and custom inverse actions |
+| [Preconditioners](../preconditioners/preconditioners.py) | Shared Preconditioner implementations |
 | [test_bicgstab.py](test_bicgstab.py) | Numerical regression tests against SciPy |
 | [example.py](example.py) | Executable demonstration |
 
@@ -162,12 +164,23 @@ The algorithm continues until the residual norm
 satisfies the prescribed tolerance or a numerical
 breakdown occurs.
 
-For an absolute stopping tolerance $\varepsilon$,
-the criterion is
+The implementation monitors the true residual of the original
+linear system and stops when
 
 <p align="center">
-$\displaystyle \|b-Ax_k\|_2\leq\varepsilon.$
+$\displaystyle
+\|b-Ax_k\|_2
+\leq
+\max\left(
+\mathrm{atol},
+\mathrm{rtol}\|b\|_2
+\right).$
 </p>
+
+> **Note — Complex systems:** BiCGSTAB also applies to complex
+> linear systems. In this case, transposes are replaced by
+> conjugate transposes, and scalar products are interpreted
+> as Hermitian inner products.
 
 ### Algorithm
 
@@ -184,10 +197,12 @@ tolerance $\varepsilon$, maximum iterations $N$.
    - Compute the intermediate residual $s_k$.
    - *Early convergence check:* If $\|s_k\|_2\leq\varepsilon$:
       - Update $x_{k+1}=x_k+\alpha_kp_k$.
-      - Set $r_{k+1}=s_k$.
-      - Stop: convergence achieved.
+      - Recompute the true residual $r_{k+1}=b-Ax_{k+1}$.
+      - If $\|r_{k+1}\|_2\leq\varepsilon$, stop: convergence achieved.
+      - Otherwise, report a residual-gap failure.
+   - Compute $t_k=As_k$.
+   - *Breakdown check:* If $t_k^Tt_k=0$, terminate due to numerical breakdown.
    - Compute the stabilization parameter $\omega_k$.
-   - *Breakdown check*. If $t_k^Tt_k=0$, terminate due to numerical breakdown.
    - Update the solution and residual.
    - *Convergence check*. If $\|r_{k+1}\|_2\leq\varepsilon,$ stop: convergence achieved.
    - *Breakdown check*. If $\omega_k=0$, terminate due to numerical breakdown.
@@ -258,6 +273,18 @@ $r=b-AM^{-1}y=b-Ax.$
 Consequently, convergence can be monitored using
 the true residual of the original problem.
 
+#### Preconditioning Methods and Documentation
+
+BiCGSTAB supports Jacobi, LU, ILU, Cholesky, IC(0), SSOR,
+and custom inverse actions.
+
+Detailed mathematical formulations, numerical properties,
+and implementations are available in the
+[Preconditioning Methods](../preconditioners/README.md)
+documentation.
+
+The present BiCGSTAB implementation uses right preconditioning.
+
 #### Integration into BiCGSTAB
 
 The integration of right preconditioning can be summarized as follows:
@@ -300,6 +327,32 @@ matrix-vector products.
 - A singular or poorly conditioned preconditioner
   can cause numerical difficulties.
 
+In finite-precision arithmetic, the implementation checks for numerical
+breakdown using smallness thresholds and finite-value checks. These
+safeguards help prevent unstable divisions and invalid numerical
+operations, although their effectiveness depends on the scaling
+and conditioning of the linear system.
+
+#### Numerical Breakdown
+
+BiCGSTAB may encounter numerical breakdown when certain scalar
+quantities become zero or numerically too small.
+
+Important quantities include:
+
+- $\rho_k$: measures the interaction between the shadow residual
+  and the current residual.
+- $\widehat r_0^T v_k$: appears in the denominator of $\alpha_k$.
+- $t_k^T t_k$: appears in the denominator of $\omega_k$.
+- $\omega_k$: appears in the recurrence defining the next
+  search direction.
+
+When these quantities become numerically unsuitable, the algorithm
+may terminate before reaching the prescribed tolerance.
+
+A numerical breakdown does not necessarily imply that the original
+linear system has no solution.
+
 #### Available Preconditioners
 
 The solver provides several preconditioning options.
@@ -310,6 +363,7 @@ The solver provides several preconditioning options.
 | Jacobi | `"jacobi"` | Diagonal preconditioning |
 | LU | `"lu"` | LU factorization |
 | ILU | `"ilu"` | Incomplete LU factorization |
+| Cholesky | `"cholesky"` | Exact Cholesky factorization for Hermitian positive-definite systems |
 | IC(0) | `"ic0"` | Incomplete Cholesky with zero fill-in |
 | SSOR | `"ssor"` | Symmetric successive over-relaxation |
 | Custom | `"custom"` | User-defined inverse action |
@@ -320,7 +374,7 @@ Supports real and complex dense matrices, SciPy sparse matrices,
 `LinearOperator`, and callable matrix-vector products.
 
 ```python
-from bicgstab_solver.BiCGSTAB import solve_bicgstab
+from krylov_methods.bicgstab_solver.BiCGSTAB import solve_bicgstab
 
 result = solve_bicgstab(A, b, rtol=1e-8, atol=1e-12,
                         preconditioner="ilu",
@@ -334,8 +388,13 @@ For custom inverse-action preconditioning:
 result = solve_bicgstab(A, b, preconditioner="custom", M=my_inverse_action)
 ```
 
-Available `preconditioner` values: `None`, `"jacobi"`, `"lu"`, `"ilu"`,
-`"ic0"` (educational real-SPD), `"ssor"`, `"custom"`.
+Available `preconditioner` values: `None`, `"jacobi"`, `"lu"`,
+`"ilu"`, `"cholesky"`, `"ic0"`, `"ssor"`, and `"custom"`.
+
+The `"cholesky"` option requires a Hermitian positive-definite
+matrix, while `"ic0"` is an educational implementation
+restricted to real symmetric positive-definite matrices.
+
 The `M` argument with `"custom"` may be an inverse-action callable,
 `LinearOperator`, or an explicit matrix to be factored and solved.
 
@@ -351,16 +410,20 @@ on nonconvergence.
 
 The convergence criterion is `||b-Ax|| <= max(atol, rtol*||b||)`.
 Numerical breakdown is reported as a nonconverged result, never silently
-returned as a successful solution. To store all approximate solutions, set
-`store_history=True`; otherwise the memory footprint is O(n).
+returned as a successful solution.
+
+To store all approximate solutions, set `store_history=True`.
+
+Otherwise, BiCGSTAB requires O(n) working-vector storage,
+excluding the system matrix and any preconditioner factors.
 
 Install: `python -m pip install numpy scipy`.
 
 From the directory containing `bicgstab_solver/`:
 
 ```bash
-python -m unittest bicgstab_solver.test_bicgstab -v
-python -m bicgstab_solver.example
+python3 -m unittest krylov_methods.bicgstab_solver.test_bicgstab -v
+python3 -m krylov_methods.bicgstab_solver.example
 ```
 The IC(0) preconditioner uses dense intermediate storage and is intended
 for educational problems, not high-performance sparse production use.

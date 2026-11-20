@@ -1,4 +1,10 @@
-"""Regression tests: run `python -m unittest gmres_solver.test_gmres -v`."""
+"""
+Numerical demonstration of GMRES.
+
+Run from the repository root:
+
+    python3 -m krylov_methods.gmres_solver.example
+"""
 
 import unittest
 
@@ -8,7 +14,6 @@ import scipy.sparse.linalg as spl
 
 from .GMRES import gmres
 from .givens import compute_givens_rotation
-from .preconditioners import select_preconditioner
 
 
 class TestGMRES(unittest.TestCase):
@@ -32,11 +37,13 @@ class TestGMRES(unittest.TestCase):
         self.assertGreater(result.cycles, 1)
 
     def test_preconditioners(self):
-        for name in ("jacobi", "lu", "ilu", "ic0", "ssor"):
+        for name in ("jacobi", "lu", "ilu", "cholesky", "ic0", "ssor"):
             with self.subTest(name=name):
-                A = self.A.T @ self.A + 5 * np.eye(12) if name == "ic0" else self.A
-                result = gmres(sp.csr_matrix(A), self.b, restart=5, maxiter=90,
-                               preconditioner=name, rtol=1e-10)
+                if name in ("cholesky", "ic0"):
+                    A = self.A.T @ self.A + 5 * np.eye(12)
+                else:
+                    A = self.A
+                result = gmres(sp.csr_matrix(A), self.b, restart=5, maxiter=90,     preconditioner=name, rtol=1e-10)
                 self.assert_solution(result, A, self.b)
 
     def test_matrix_free(self):
@@ -71,6 +78,13 @@ class TestGMRES(unittest.TestCase):
         result = gmres(self.A, self.b, restart=4, maxiter=120, rtol=1e-10)
         self.assert_solution(result)
         np.testing.assert_allclose(result.x, expected, rtol=1e-8, atol=1e-8)
+
+    def test_true_residual(self):
+        result = gmres(self.A, self.b, restart=4, maxiter=100, rtol=1e-10, atol=1e-12)
+        self.assertTrue(result.converged)
+        true_residual = np.linalg.norm(self.b - self.A @ result.x)
+        tolerance = max(1e-12, 1e-10 * np.linalg.norm(self.b))
+        self.assertLessEqual(true_residual, tolerance)
 
 
 if __name__ == "__main__":

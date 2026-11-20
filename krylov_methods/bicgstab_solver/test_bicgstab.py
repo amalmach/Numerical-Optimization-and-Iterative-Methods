@@ -29,9 +29,12 @@ class TestBiCGSTAB(unittest.TestCase):
         self.assert_solved(result)
 
     def test_preconditioners(self):
-        for name in ("jacobi", "ilu", "lu", "ssor", "ic0"):
+        for name in ("jacobi", "ilu", "lu", "cholesky", "ssor", "ic0"):
             with self.subTest(preconditioner=name):
-                A = self.A.T @ self.A + 5 * np.eye(20) if name == "ic0" else self.A
+                if name in ("cholesky", "ic0"):
+                    A = self.A.T @ self.A + 5 * np.eye(20)
+                else:
+                    A = self.A
                 result = solve_bicgstab(sp.csr_matrix(A), self.b,
                                         preconditioner=name, rtol=1e-10)
                 self.assert_solved(result, A)
@@ -78,6 +81,20 @@ class TestBiCGSTAB(unittest.TestCase):
         result = solve_bicgstab(self.A, self.b, rtol=1e-10)
         self.assert_solved(result)
         np.testing.assert_allclose(result.solution, x_scipy, rtol=1e-8, atol=1e-8)
+
+    def test_true_residual(self):
+        result = solve_bicgstab(self.A, self.b, rtol=1e-10, atol=1e-12)
+        self.assertTrue(result.converged)
+        true_residual = np.linalg.norm(self.b - self.A @ result.solution)
+        tolerance = max(1e-12, 1e-10 * np.linalg.norm(self.b))
+        self.assertLessEqual(true_residual, tolerance)
+
+    def test_complex_jacobi(self):
+        A = self.A + 1j * np.eye(20)
+        b = self.b + 1j * self.b[::-1]
+        result = solve_bicgstab(A, b, preconditioner="jacobi", rtol=1e-10)
+        self.assertTrue(result.converged)
+        np.testing.assert_allclose(result.solution, np.linalg.solve(A, b), rtol=1e-8, atol=1e-8)
 
 
 if __name__ == "__main__":

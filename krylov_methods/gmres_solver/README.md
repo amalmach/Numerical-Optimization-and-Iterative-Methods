@@ -21,7 +21,13 @@ $Ax=b,$
 where
 
 <p align="center">
-$A\in\mathbb{R}^{n\times n},\qquad b\in\mathbb{R}^{n}.$
+$\displaystyle
+A\in\mathbb{F}^{n\times n},
+\qquad
+b\in\mathbb{F}^{n},
+\qquad
+\mathbb{F}\in\{\mathbb{R},\mathbb{C}\}.
+$
 </p>
 
 Unlike Conjugate Gradient, GMRES does not require the coefficient
@@ -35,6 +41,11 @@ The resulting approximation is obtained by solving this
 reduced problem rather than directly solving the original
 linear system.
 
+> **Note — Complex systems:** GMRES also applies to complex linear
+> systems. In this case, transposes are replaced by conjugate
+> transposes, and orthogonality is defined using Hermitian
+> inner products.
+
 ### Files
 
 | File | Purpose |
@@ -43,7 +54,7 @@ linear system.
 | [hessenberg.py](hessenberg.py) | Hessenberg workspace and projection helper |
 | [givens.py](givens.py) | Stable Givens rotations and right-hand-side updates |
 | [least_squares.py](least_squares.py) | Reduced triangular solve with rank-deficient fallback |
-| [preconditioners.py](preconditioners.py) | Identity, Jacobi, exact LU, ILU, IC(0), SSOR, custom |
+| [Preconditioners](../preconditioners/preconditioners.py) | Shared Preconditioner implementations |
 | [GMRES.py](GMRES.py) | Solver options, convergence, restarting, result metadata |
 | [example.py](example.py) | Executable usage examples |
 | [test_gmres.py](test_gmres.py) | Regression tests against SciPy |
@@ -123,14 +134,17 @@ For each iteration $k=1,\ldots,m$:
    $\displaystyle w=Av_k.$
    </p>
 
-2. Orthogonalize against the previous Arnoldi vectors:
+2. Orthogonalize the new vector against the existing
+   Arnoldi basis using Modified Gram-Schmidt.
+
+   For $i=1,\ldots,k$:
 
    <p align="center">
-   $\displaystyle h_{i,k}=v_i^Tw, \qquad i=1,\ldots,k.$
+   $\displaystyle h_{i,k}=v_i^Hw.$
    </p>
 
    <p align="center">
-   $\displaystyle w=w-h_{i,k}v_i.$
+   $\displaystyle w\leftarrow w-h_{i,k}v_i.$
    </p>
 
 3. Compute the normalization coefficient:
@@ -148,7 +162,7 @@ For each iteration $k=1,\ldots,m$:
 The resulting basis $V_m=[v_1,\ldots,v_m].$ satisfies
 
 <p align="center">
-$\displaystyle V_m^TV_m=I_m.$
+$\displaystyle V_m^HV_m=I_m.$
 </p>
 
 </details>
@@ -248,13 +262,15 @@ $\displaystyle \|r_m\|_2
 Thus, the GMRES minimization problem reduces to
 
 <p align="center">
-$\displaystyle y_m
+$\displaystyle
+y_m
 =
-\underset{y\in\mathbb{R}^m}
-{\mathrm{arg\,min}}
+\underset{y\in\mathbb{F}^{m}}
+{\operatorname{arg\,min}}
 \left\|
 \beta e_1-\overline{H}_my
-\right\|_2.$
+\right\|_2.
+$
 </p>
 
 This reduced least-squares problem can be solved efficiently
@@ -336,6 +352,35 @@ The residual norm is
 <p align="center">
 $\displaystyle \|r_m\|_2=|g_{m+1}|.$
 </p>
+
+**Remark — Complex Givens rotations**
+
+For complex-valued systems, the rotations must be unitary
+rather than simply orthogonal.
+
+A complex Givens rotation can be written as
+
+<p align="center">
+$\displaystyle
+G_k=
+\begin{pmatrix}
+c_k & s_k\\
+-\overline{s_k} & c_k
+\end{pmatrix},
+$
+</p>
+
+where $c_k$ is real and nonnegative, and
+
+<p align="center">
+$\displaystyle c_k^2+|s_k|^2=1.$
+</p>
+
+The conjugation ensures that the rotation preserves
+the Euclidean norm.
+
+The implementation handles real and complex rotations
+through the same numerical procedure.
 
 </details>
 
@@ -731,56 +776,15 @@ equivalent system with more favorable numerical properties.
 A preconditioner $M$ approximates $A$ while remaining
 significantly cheaper to invert or apply.
 
-**Left preconditioning**
+GMRES supports several preconditioning techniques, including
+Jacobi, LU, ILU, Cholesky, IC(0), SSOR, and custom inverse actions.
 
-<p align="center">
-$\displaystyle M^{-1}Ax=M^{-1}b.$
-</p>
+The mathematical descriptions and numerical implementations
+are centralized in the
+[Preconditioning Methods](../preconditioners/README.md)
+documentation.
 
-The corresponding residual is
-
-<p align="center">
-$\displaystyle \widetilde{r}=M^{-1}(b-Ax).$
-</p>
-
-Left-preconditioned GMRES minimizes
-
-<p align="center">
-$\displaystyle \|M^{-1}(b-Ax)\|_2.$
-</p>
-
-**Right preconditioning**
-
-<p align="center">
-$\displaystyle AM^{-1}y=b,
-\qquad
-x=M^{-1}y.$
-</p>
-
-Right-preconditioned GMRES can minimize the
-original residual norm directly.
-
-**Split preconditioning**
-
-<p align="center">
-$\displaystyle M_L^{-1}AM_R^{-1}y=M_L^{-1}b,$
-</p>
-
-with
-
-<p align="center">
-$\displaystyle x=M_R^{-1}y.$
-</p>
-
-**Common preconditioners**
-
-- Incomplete LU factorization (ILU).
-- Incomplete Cholesky factorization (IC).
-- Sparse Approximate Inverse (SPAI).
-- Factorized Sparse Approximate Inverse (FSAI).
-- Geometric Multigrid (GMG).
-- Algebraic Multigrid (AMG).
-- Domain decomposition methods.
+The present GMRES implementation uses left preconditioning.
 
 </details>
 
@@ -861,7 +865,11 @@ Compute its norm:
 $\displaystyle \beta=\|r\|_2.$
 </p>
 
-If $\beta\leq\varepsilon$, stop.
+If the true residual satisfies the prescribed stopping
+criterion, terminate successfully.
+
+Otherwise, normalize the preconditioned residual to
+initialize the next Arnoldi cycle.
 
 Initialize
 
@@ -939,31 +947,36 @@ $\displaystyle x\leftarrow x+V_jy_j.$
 
 ### Step 4 — Convergence Check and Restart
 
-**4.1.** Recompute the preconditioned residual:
+**4.1.** Compute the true residual:
 
 <p align="center">
-$\displaystyle r=M^{-1}(b-Ax).$
+$\displaystyle r_{\mathrm{true}}=b-Ax.$
 </p>
 
-**4.2.** Check the preconditioned convergence criterion:
+**4.2.** Check the convergence criterion:
 
 <p align="center">
-$\displaystyle \|r\|_2\leq\varepsilon.$
+$\displaystyle
+\|r_{\mathrm{true}}\|_2
+\leq
+\max(\mathrm{atol},\mathrm{rtol}\|b\|_2).
+$
 </p>
 
-If satisfied, terminate successfully.
+If the criterion is satisfied, terminate successfully.
 
-Otherwise, restart with the updated approximation,
-provided that the iteration budget remains available.
+Otherwise, initialize a new Krylov cycle using the
+updated approximation, provided that the iteration
+budget remains available.
 
-The true residual
+The preconditioned residual
 
 <p align="center">
-$\displaystyle r_{\mathrm{true}}=b-Ax$
+$\displaystyle
+\widetilde r=M^{-1}(b-Ax)$
 </p>
 
-may also be monitored to assess the accuracy
-of the solution to the original system.
+is used to construct the next Arnoldi basis.
 
 **End While**
 
@@ -988,6 +1001,41 @@ and convergence status.
 - This norm differs in general from the true residual
   norm $\|b-Ax\|_2$.
 
+**Important distinction**
+
+Left-preconditioned GMRES minimizes the preconditioned
+residual norm over the current affine Krylov subspace
+
+<p align="center">
+$\displaystyle
+x_0+
+\mathcal{K}_m
+\left(
+M^{-1}A,\,
+M^{-1}r_0
+\right).
+$
+</p>
+
+However, minimizing the preconditioned residual does not
+necessarily minimize the true residual norm.
+
+Therefore, the implementation verifies convergence using
+
+<p align="center">
+$\displaystyle
+\|b-Ax_k\|_2
+\leq
+\max\left(
+\mathrm{atol},
+\mathrm{rtol}\|b\|_2
+\right).
+$
+</p>
+
+The preconditioned residual estimates and true residual
+norms may follow different convergence trajectories.
+
 </details>
 
 ---
@@ -999,11 +1047,14 @@ and convergence status.
 
 **Convergence**
 
-GMRES minimizes the Euclidean residual norm over the
-current affine Krylov subspace.
+Unpreconditioned GMRES minimizes the Euclidean norm of
+the true residual over the current affine Krylov subspace.
 
-In exact arithmetic, unrestarted GMRES produces
-nonincreasing residual norms.
+Left-preconditioned GMRES instead minimizes the Euclidean
+norm of the preconditioned residual.
+
+In exact arithmetic, these minimized residual norms are
+nonincreasing within an unrestarted Krylov cycle.
 
 **Computational complexity**
 
@@ -1056,17 +1107,18 @@ the accuracy of the approximation.
 
 Install dependencies: `python -m pip install numpy scipy`.
 
-From the **directory containing** the `gmres_solver` folder:
+From the repository root (the directory containing
+`krylov_methods/`), run:
 
 ```bash
-python -m gmres_solver.example
-python -m unittest gmres_solver.test_gmres -v
+python3 -m krylov_methods.gmres_solver.example
+python3 -m unittest krylov_methods.gmres_solver.test_gmres -v
 ```
 Usage:
 
 ```python
 import numpy as np
-from gmres_solver.GMRES import gmres
+from krylov_methods.gmres_solver.GMRES import gmres
 
 A = np.array([[4., 1.], [2., 3.]])
 b = np.array([1., 2.])
@@ -1091,6 +1143,23 @@ to factor and solve, **not** as the inverse matrix.
 
 `GMRESResult` provides `x`, `converged`, `iterations`, `cycles`,
 `residual_norm`, `residual_history`, `preconditioned_history`, and `message`.
+
+**Residual histories**
+
+The solver records two types of residual information:
+
+- `preconditioned_history`: the estimated preconditioned
+  residual norm at each Arnoldi iteration, obtained through
+  the Givens rotations.
+
+- `residual_history`: explicitly computed true residual
+  norms, recorded initially and after completed restart
+  cycles. Additional intermediate values are recorded
+  when a callback is provided.
+
+Consequently, these histories may have different lengths
+and should not automatically be interpreted as values
+at identical iteration indices.
 
 #### Notes
 

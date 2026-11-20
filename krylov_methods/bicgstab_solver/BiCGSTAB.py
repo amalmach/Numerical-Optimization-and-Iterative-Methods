@@ -12,8 +12,7 @@ from typing import Callable
 import numpy as np
 import scipy.sparse.linalg as spl
 
-from .preconditioners import select_preconditioner
-
+from krylov_methods.preconditioners import make_preconditioner
 
 @dataclass
 class BiCGSTABResult:
@@ -32,23 +31,24 @@ class BiCGSTABResult:
         """Alias compatible with the GMRES result object."""
         return self.solution
 
-
 def _matvec(A, n, dtype):
+    """Return a validated matrix-vector product function."""
     if not callable(A) and not isinstance(A, spl.LinearOperator):
         if not hasattr(A, "shape") or A.shape != (n, n):
-            raise ValueError("A must be square and compatible with b")
+            raise ValueError("A must be square and compatible with b.")
     elif hasattr(A, "shape") and A.shape != (n, n):
-        raise ValueError("Operator shape is incompatible with b")
-
+        raise ValueError("Operator shape is incompatible with b.")
     def action(v):
-        result = np.asarray(A(v) if callable(A) else A @ v,
-                            dtype=dtype).reshape(-1)
-        if result.shape != (n,) or not np.all(np.isfinite(result)):
-            raise ValueError("A returned an invalid matrix-vector product")
+        result = np.asarray(
+            A(v) if callable(A) else A @ v,
+            dtype=dtype,
+        ).reshape(-1)
+        if result.shape != (n,):
+            raise ValueError("A returned an invalid matrix-vector product.")
+        if not np.all(np.isfinite(result)):
+            raise ValueError("A returned non-finite numerical values.")
         return result
-
     return action
-
 
 def solve_bicgstab(A, b, x0=None, *, rtol=1e-8, atol=0.0,
                    max_iter=None, preconditioner=None, M=None,
@@ -64,7 +64,9 @@ def solve_bicgstab(A, b, x0=None, *, rtol=1e-8, atol=0.0,
     x0 : initial approximation; defaults to zero
     rtol, atol : stopping condition ||b-Ax|| <= max(atol, rtol*||b||)
     max_iter : maximum BiCGSTAB iterations; defaults to 2*n
-    preconditioner : None, 'jacobi', 'lu', 'ilu', 'ic0', 'ssor', 'custom'
+    preconditioner : None or str
+        Available options: None, 'jacobi', 'lu', 'ilu',
+        'cholesky', 'ic0', 'ssor', and 'custom'.
     M : custom inverse-action callable/LinearOperator or preconditioner matrix
         with preconditioner='custom'.
     preconditioner_options : constructor settings, e.g. ILU drop_tol
@@ -84,18 +86,28 @@ def solve_bicgstab(A, b, x0=None, *, rtol=1e-8, atol=0.0,
     -----
     The algorithm computes M^{-1}p and M^{-1}s before multiplying by A.
     That is stationary RIGHT preconditioning (not left preconditioning).
-    It minimizes the residual of the original Ax=b, and uses the true
-    residual norm for the stopping decision. Complex inner products use
-    np.vdot (conjugating the shadow vector).
+    The stabilization step locally minimizes the residual norm
+    along the stabilization direction. Convergence is determined using
+    the true residual norm of the original system Ax=b. Complex inner
+    products use np.vdot (conjugating the shadow vector).
     """
-    b = np.asarray(b).reshape(-1)
+    b = np.asarray(b)
+    if b.ndim not in (1, 2):
+        raise ValueError("b must be a vector.")
+    if b.ndim == 2 and 1 not in b.shape:
+        raise ValueError("b must have shape (n,), (n,1), or (1,n).")
+    b = b.reshape(-1)
     if b.size == 0 or not np.issubdtype(b.dtype, np.number):
-        raise ValueError("b must be a nonempty numeric vector")
+        raise ValueError("b must be a nonempty numeric vector.")
+    if not np.all(np.isfinite(b)):
+        raise ValueError("b must contain finite numerical values.")
     n = b.size
     dtype = np.result_type(b.dtype, getattr(A, "dtype", float),
                            getattr(M, "dtype", float), np.float64)
     b = b.astype(dtype)
     x = np.zeros(n, dtype=dtype) if x0 is None else np.asarray(x0, dtype=dtype).reshape(-1).copy()
+    if not np.all(np.isfinite(x)):
+        raise ValueError("x0 must contain finite numerical values.")
     if x.shape != (n,):
         raise ValueError("x0 has incompatible size")
     if not (np.isfinite(rtol) and np.isfinite(atol)) or rtol < 0 or atol < 0:
@@ -108,9 +120,12 @@ def solve_bicgstab(A, b, x0=None, *, rtol=1e-8, atol=0.0,
         raise ValueError("residual_recompute must be a nonnegative integer")
 
     mv = _matvec(A, n, dtype)
-    psolve = select_preconditioner(
-        A, preconditioner, M=M,
-        **({} if preconditioner_options is None else dict(preconditioner_options)))
+    psolve = make_preconditioner(
+        A,
+        preconditioner,
+        M=M,
+        options=preconditioner_options,
+    )
 
     def precondition(v):
         out = np.asarray(psolve(v), dtype=dtype).reshape(-1)
@@ -189,9 +204,13 @@ def solve_bicgstab(A, b, x0=None, *, rtol=1e-8, atol=0.0,
 
         s_hat = precondition(s)
         t = mv(s_hat)
+        t_norm = np.linalg.norm(t)
+        if not np.isfinite(t_norm):
+            return result(k - 1, False, "breakdown: non-finite stabilization vector", True)
+        if t_norm <= small * max(1.0, np.linalg.norm(s)):
+            return result(k - 1, False, "breakdown: stabilization vector approximately zero", True)
         tt = np.vdot(t, t)
-        if abs(tt) <= small * np.linalg.norm(t) ** 2 or tt == 0:
-            return result(k - 1, False, "breakdown: A M^-1 s approximately zero", True)
+
         omega = np.vdot(t, s) / tt
         if abs(omega) <= small:
             return result(k - 1, False, "breakdown: omega approximately zero", True)

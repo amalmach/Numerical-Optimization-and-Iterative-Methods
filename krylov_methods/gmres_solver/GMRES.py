@@ -1,7 +1,16 @@
 #!/usr/bin/env python3
-"""GMRES: unrestarted/restarted, with optional left preconditioning.
-From repository parent:
-    from gmres_solver.GMRES import gmres
+"""
+Generalized Minimal Residual (GMRES)
+====================================
+
+Unrestarted and restarted GMRES with optional
+left preconditioning.
+
+Supports real and complex linear systems.
+
+Usage from the repository root:
+
+    from krylov_methods.gmres_solver.GMRES import gmres
 """
 
 from dataclasses import dataclass
@@ -15,7 +24,7 @@ from .arnoldi import arnoldi_step
 from .hessenberg import initialize_hessenberg
 from .givens import apply_givens_rotation, compute_givens_rotation, rotate_rhs
 from .least_squares import solve_reduced_system
-from .preconditioners import select_preconditioner
+from krylov_methods.preconditioners import make_preconditioner
 
 
 @dataclass
@@ -31,11 +40,18 @@ class GMRESResult:
 
 
 def _operator(A, n, dtype):
-    if callable(A) and not isinstance(A, spl.LinearOperator):
-        return lambda x: np.asarray(A(x), dtype=dtype).reshape(-1)
-    if not hasattr(A, "shape") or A.shape != (n, n):
-        raise ValueError("A must be square and compatible with b")
-    return lambda x: np.asarray(A @ x, dtype=dtype).reshape(-1)
+    if not callable(A) or isinstance(A, spl.LinearOperator):
+        if not hasattr(A, "shape") or A.shape != (n, n):
+            raise ValueError("A must be square and compatible with b.")
+    def matvec(x):
+        y = A(x) if callable(A) and not isinstance(A, spl.LinearOperator) else A @ x
+        y = np.asarray(y, dtype=dtype).reshape(-1)
+        if y.shape != (n,):
+            raise ValueError("Matrix-vector product returned an invalid shape.")
+        if not np.all(np.isfinite(y)):
+            raise ValueError("Matrix-vector product returned non-finite values.")
+        return y
+    return matvec
 
 
 def gmres(A, b, x0=None, *, restart=None, maxiter=None, rtol=1e-8,
@@ -57,7 +73,9 @@ def gmres(A, b, x0=None, *, restart=None, maxiter=None, rtol=1e-8,
         otherwise 10*n. Unrestarted is capped at dimension n.
     rtol, atol : nonnegative floats
         Convergence uses TRUE ||b-Ax|| <= max(atol, rtol*||b||).
-    preconditioner : none, 'jacobi', 'lu', 'ilu', 'ic0', 'ssor', 'custom'
+    preconditioner : None or str
+        Available options: None, 'jacobi', 'lu', 'ilu',
+        'cholesky', 'ic0', 'ssor', and 'custom'.
     M : matrix, inverse-action callable, or LinearOperator with 'custom'
     preconditioner_options : dict of constructor parameters (e.g. drop_tol)
     callback : optional function called with (iteration, true_residual,
@@ -71,9 +89,18 @@ def gmres(A, b, x0=None, *, restart=None, maxiter=None, rtol=1e-8,
     history contains the initial norm, one value per completed cycle and
     optional intermediate values when a callback is given.
     """
-    b = np.asarray(b).reshape(-1)
+    b = np.asarray(b)
+    if b.ndim not in (1, 2):
+        raise ValueError("b must be a vector.")
+    if b.ndim == 2 and 1 not in b.shape:
+        raise ValueError("b must have shape (n,), (n,1), or (1,n).")
+
+    b = b.reshape(-1)
     if b.size == 0 or not np.issubdtype(b.dtype, np.number):
-        raise ValueError("b must be a nonempty numeric vector")
+        raise ValueError("b must be a nonempty numeric vector.")
+    if not np.all(np.isfinite(b)):
+        raise ValueError("b must contain finite numerical values.")
+
     n = len(b)
     dtype = np.result_type(b.dtype, getattr(A, "dtype", float),
                            getattr(M, "dtype", float), np.float64)
@@ -81,6 +108,8 @@ def gmres(A, b, x0=None, *, restart=None, maxiter=None, rtol=1e-8,
     x = np.zeros(n, dtype=dtype) if x0 is None else np.asarray(x0, dtype=dtype).reshape(-1).copy()
     if x.size != n:
         raise ValueError("x0 has incompatible length")
+    if not np.all(np.isfinite(x)):
+        raise ValueError("x0 must contain finite numerical values.")
     if rtol < 0 or atol < 0 or not np.isfinite(rtol + atol):
         raise ValueError("rtol and atol must be finite and nonnegative")
     if restart is not None and (not isinstance(restart, (int, np.integer)) or restart < 1):
@@ -90,8 +119,12 @@ def gmres(A, b, x0=None, *, restart=None, maxiter=None, rtol=1e-8,
     if not isinstance(maxiter, (int, np.integer)) or maxiter < 1:
         raise ValueError("maxiter must be a positive integer")
     matvec = _operator(A, n, dtype)
-    options = {} if preconditioner_options is None else dict(preconditioner_options)
-    psolve = select_preconditioner(A, preconditioner, M=M, **options)
+    psolve = make_preconditioner(
+        A,
+        preconditioner,
+        M=M,
+        options=preconditioner_options,
+    )
 
     def apply_m(v):
         result = np.asarray(psolve(v), dtype=dtype).reshape(-1)

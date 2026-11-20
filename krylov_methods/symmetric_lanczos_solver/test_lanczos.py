@@ -49,6 +49,42 @@ class TestLanczos(unittest.TestCase):
         result = lanczos_tridiagonalize(A, np.array([1+0j, 2+1j]), m=2)
         np.testing.assert_allclose(np.sort(result.ritz_values), np.linalg.eigvalsh(A), atol=1e-10)
 
+    def test_complex_projection(self):
+        A = np.array([[4, 1 + 1j], [1 - 1j, 3]], dtype=complex)
+        result = lanczos_tridiagonalize(A, np.array([1+0j, 2+1j]), m=2)
+        Q = result.basis
+        np.testing.assert_allclose(Q.conj().T @ Q, np.eye(2), atol=1e-10)
+        np.testing.assert_allclose(Q.conj().T @ A @ Q, result.tridiagonal, atol=1e-10)
+
+    def test_complex_callable_real_start(self):
+        A = np.array([[4, 1 + 1j], [1 - 1j, 3]], dtype=complex)
+        result = lanczos_tridiagonalize(lambda v: A @ v, np.array([1., 2.]), m=2)
+        self.assertTrue(np.iscomplexobj(result.basis))
+        np.testing.assert_allclose(result.ritz_values, np.linalg.eigvalsh(A), atol=1e-10)
+
+    def test_reject_nonsymmetric(self):
+        A = np.array([[2., 3.], [0., 2.]])
+        with self.assertRaises(ValueError):
+            lanczos_tridiagonalize(A, np.array([1., 1.]))
+
+    def test_invalid_starting_vector(self):
+        v = np.ones(12)
+        v[0] = np.nan
+        with self.assertRaises(ValueError):
+            lanczos_tridiagonalize(self.A, v)
+
+    def test_bad_galerkin_rhs(self):
+        with self.assertRaises(ValueError):
+            lanczos_galerkin(self.A, np.full(12, np.inf))
+
+    def test_ritz_pair_residual(self):
+        result = lanczos_tridiagonalize(self.A, self.b, m=8)
+        eigenvalues, Y = np.linalg.eigh(result.tridiagonal)
+        U = result.basis @ Y
+        actual = np.linalg.norm(self.A @ U - U * eigenvalues, axis=0)
+        predicted = result.beta_next * np.abs(Y[-1, :])
+        np.testing.assert_allclose(actual, predicted, atol=1e-10)
+
     def test_full_galerkin_solution(self):
         result = lanczos_galerkin(self.A, self.b, m=12, tol=1e-10)
         self.assertTrue(result.converged, result.message)
