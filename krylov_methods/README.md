@@ -100,50 +100,36 @@ Preconditioner names and options are listed in each solver's README.
 Not every preconditioner is appropriate for every algorithm; for example,
 generic nonsymmetric ILU is not a valid PCG preconditioner.
 
-## Interactive Numerical Dashboards
+## Interactive Notebooks and Dashboards
 
-Explore numerical methods directly in your browser using interactive
-[Voilà](https://voila.readthedocs.io/) dashboards powered by
-[Binder](https://mybinder.org/).
+Explore numerical methods directly in your browser using
+[Voilà](https://voila.readthedocs.io/) and
+[Binder](https://mybinder.org/). **No installation is required.**
 
-**No installation is required.** Select numerical parameters, run
-experiments, visualize convergence, and inspect numerical results.
+Choose how you want to explore each experiment:
 
-| Numerical Method | Interactive Experiment |
-|:---|:---:|
-| **Conjugate Gradient** | [Launch Dashboard](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/main?urlpath=voila%2Frender%2Fkrylov_methods%2Fnotebooks%2Fconjugate_gradient_demo.ipynb) |
-| **GMRES** | [Launch Dashboard](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/main?urlpath=voila%2Frender%2Fkrylov_methods%2Fnotebooks%2Fgmres_demo.ipynb) |
-| **BiCGSTAB** | [Launch Dashboard](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/main?urlpath=voila%2Frender%2Fkrylov_methods%2Fnotebooks%2Fbicgstab_demo.ipynb) |
-| **Symmetric Lanczos** | [Launch Dashboard](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/main?urlpath=voila%2Frender%2Fkrylov_methods%2Fnotebooks%2Fsymmetric_lanczos_demo.ipynb) |
-| **Steepest Descent** | [Launch Dashboard](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/main?urlpath=voila%2Frender%2Fgradient_methods%2Fnotebooks%2Fsteepest_descent_demo.ipynb) |
-| **Krylov Methods Comparison** | [Launch Dashboard](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/main?urlpath=voila%2Frender%2Fkrylov_methods%2Fnotebooks%2Fkrylov_comparison.ipynb) |
+- **GitHub Notebook:** View the notebook source and explanations.
+- **Voilà Dashboard:** Run interactive experiments with parameter controls,
+  convergence plots, and numerical reports without displaying Python code.
+- **JupyterLab:** Open the executable notebook in Binder to inspect and
+  modify the Python code.
 
-The dashboards provide interactive parameter controls, convergence
-visualizations, and expandable numerical reports without displaying
-the underlying Python code.
+| Numerical Method | GitHub Notebook | Voilà Dashboard | JupyterLab |
+|:---|:---:|:---:|:---:|
+| **Conjugate Gradient** | [Open](notebooks/conjugate_gradient_demo.ipynb) | [Launch Dashboard](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/main?urlpath=voila%2Frender%2Fkrylov_methods%2Fnotebooks%2Fconjugate_gradient_demo.ipynb) | [Launch JupyterLab](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/main?labpath=krylov_methods%2Fnotebooks%2Fconjugate_gradient_demo.ipynb) |
+| **GMRES** | [Open](notebooks/gmres_demo.ipynb) | [Launch Dashboard](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/main?urlpath=voila%2Frender%2Fkrylov_methods%2Fnotebooks%2Fgmres_demo.ipynb) | [Launch JupyterLab](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/main?labpath=krylov_methods%2Fnotebooks%2Fgmres_demo.ipynb) |
+| **BiCGSTAB** | [Open](notebooks/bicgstab_demo.ipynb) | [Launch Dashboard](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/main?urlpath=voila%2Frender%2Fkrylov_methods%2Fnotebooks%2Fbicgstab_demo.ipynb) | [Launch JupyterLab](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/main?labpath=krylov_methods%2Fnotebooks%2Fbicgstab_demo.ipynb) |
+| **Symmetric Lanczos** | [Open](notebooks/symmetric_lanczos_demo.ipynb) | [Launch Dashboard](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/main?urlpath=voila%2Frender%2Fkrylov_methods%2Fnotebooks%2Fsymmetric_lanczos_demo.ipynb) | [Launch JupyterLab](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/main?labpath=krylov_methods%2Fnotebooks%2Fsymmetric_lanczos_demo.ipynb) |
+| **Steepest Descent** | [Open](../gradient_methods/notebooks/steepest_descent_demo.ipynb) | [Launch Dashboard](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/main?urlpath=voila%2Frender%2Fgradient_methods%2Fnotebooks%2Fsteepest_descent_demo.ipynb) | [Launch JupyterLab](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/main?labpath=gradient_methods%2Fnotebooks%2Fsteepest_descent_demo.ipynb) |
+| **Krylov Methods Comparison** | [Open](notebooks/krylov_comparison.ipynb) | [Launch Dashboard](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/main?urlpath=voila%2Frender%2Fkrylov_methods%2Fnotebooks%2Fkrylov_comparison.ipynb) | [Launch JupyterLab](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/main?labpath=krylov_methods%2Fnotebooks%2Fkrylov_comparison.ipynb) |
+
+The notebook suite shares test-problem generators and plotting utilities in
+[`notebooks/notebook_utils.py`](notebooks/notebook_utils.py).
+For experimental details and Binder requirements, see
+[`notebooks/README.md`](notebooks/README.md).
 
 **Note:** Binder may take some time to initialize the environment
 during the first launch.
-
-
-## Interactive notebooks
-
-Each method has a dedicated notebook with numerical experiments, convergence
-plots, and comparisons with SciPy. The comparison notebook brings the methods
-together while respecting their mathematical applicability.
-
-| Notebook | GitHub | Binder |
-|:---|:---|:---|
-| Cross-method comparison (including Steepest Descent) | [Open](notebooks/krylov_comparison.ipynb) | [Launch](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/HEAD?labpath=krylov_methods%2Fnotebooks%2Fkrylov_comparison.ipynb) |
-| Conjugate Gradient | [Open](notebooks/conjugate_gradient_demo.ipynb) | [Launch](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/HEAD?labpath=krylov_methods%2Fnotebooks%2Fconjugate_gradient_demo.ipynb) |
-| GMRES | [Open](notebooks/gmres_demo.ipynb) | [Launch](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/HEAD?labpath=krylov_methods%2Fnotebooks%2Fgmres_demo.ipynb) |
-| BiCGSTAB | [Open](notebooks/bicgstab_demo.ipynb) | [Launch](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/HEAD?labpath=krylov_methods%2Fnotebooks%2Fbicgstab_demo.ipynb) |
-| Symmetric Lanczos | [Open](notebooks/symmetric_lanczos_demo.ipynb) | [Launch](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/HEAD?labpath=krylov_methods%2Fnotebooks%2Fsymmetric_lanczos_demo.ipynb) |
-
-The notebook suite shares test-problem generators and plotting utilities in
-[`notebooks/notebook_utils.py`](notebooks/notebook_utils.py). To see the
-experiments and the Binder requirements, visit the
-[`notebooks/README`](notebooks/README.md).
 
 ### Numerical questions explored
 
