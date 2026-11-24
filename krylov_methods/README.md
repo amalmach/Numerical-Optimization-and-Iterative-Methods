@@ -65,8 +65,6 @@ formulations become conjugate-transpose (Hermitian) products.
 **Steepest Descent** is a gradient-based baseline and lives in the separate
 [`gradient_methods/steepest_descent_solver`](../gradient_methods/steepest_descent_solver/README.md)
 package. It is included in the comparison notebook alongside the Krylov methods.
-Its [mathematical formulation](Mathematical_formulation_and_algorithms/1.steepest-descent-method.md)
-is retained here for continuity.
 
 ### Method selection
 
