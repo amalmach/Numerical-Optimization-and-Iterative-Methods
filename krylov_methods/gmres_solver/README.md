@@ -361,13 +361,10 @@ rather than simply orthogonal.
 A complex Givens rotation can be written as
 
 <p align="center">
-$\displaystyle
-G_k=
-\begin{pmatrix}
-c_k & s_k\\
--\overline{s_k} & c_k
-\end{pmatrix},
-$
+  <img
+    src="https://latex.codecogs.com/svg.image?G_k%3D%5Cbegin%7Bpmatrix%7Dc_k%26s_k%5C%5C-%5Coverline%7Bs_k%7D%26c_k%5Cend%7Bpmatrix%7D"
+    alt="Complex Givens rotation G_k with rows (c_k, s_k) and (-conjugate(s_k), c_k)"
+  >
 </p>
 
 where $c_k$ is real and nonnegative, and
