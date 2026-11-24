@@ -157,8 +157,8 @@ def _history_xy(data, label):
     return indices, values
 
 
-def _convergence_plot(histories, title, ylabel, xlabel, threshold=None):
-    fig, ax = plt.subplots(figsize=(10, 5))
+def _convergence_plot(histories, title, ylabel, xlabel, threshold=None, figsize=(10, 5)):
+    fig, ax = plt.subplots(figsize=figsize)
     tiny = np.finfo(float).tiny
     for label, data in histories.items():
         indices, values = _history_xy(data, label)
@@ -184,7 +184,7 @@ def _convergence_plot(histories, title, ylabel, xlabel, threshold=None):
     return fig, ax
 
 
-def residual_plot(histories, threshold, title="Residual convergence", xlabel="Iteration"):
+def residual_plot(histories, threshold, title="Residual convergence", xlabel="Iteration", figsize=(10, 5)):
     """Plot residual norms; values can be arrays or (iterations, norms).
 
     Only pass *true* residuals here. For left-preconditioned GMRES, plot
@@ -192,15 +192,15 @@ def residual_plot(histories, threshold, title="Residual convergence", xlabel="It
     """
     return _convergence_plot(
         histories, title, r"True residual $\|b-Ax_k\|_2$", xlabel,
-        threshold=threshold,
+        threshold=threshold, figsize=figsize,
     )
 
 
-def error_plot(histories, title="Relative solution-error convergence", xlabel="Iteration"):
+def error_plot(histories, title="Relative solution-error convergence", xlabel="Iteration", figsize=(10, 5)):
     """Plot relative errors; accepts arrays or (iterations, errors)."""
     return _convergence_plot(
         histories, title, r"Relative error $\|x_k-x^*\|_2/\|x^*\|_2$",
-        xlabel,
+        xlabel, figsize=figsize,
     )
 
 
