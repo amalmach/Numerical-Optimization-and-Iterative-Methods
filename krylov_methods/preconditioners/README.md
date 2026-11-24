@@ -67,7 +67,7 @@ The corresponding preconditioned residual is
 $\displaystyle \widetilde{r}_k=M^{-1}(b-Ax_k).$
 </p>
 
-Left-preconditioned GMRES minimizes the norm of the
+Left-preconditioned Krylov solver minimizes the norm of the
 preconditioned residual over the corresponding Krylov
 approximation space:
 
@@ -117,7 +117,7 @@ The residual satisfies
 $\displaystyle r=b-AM^{-1}y=b-Ax.$
 </p>
 
-Consequently, right-preconditioned GMRES can minimize
+Consequently, a right-preconditioned Krylov solver can minimize
 the original residual norm directly:
 
 <p align="center">
