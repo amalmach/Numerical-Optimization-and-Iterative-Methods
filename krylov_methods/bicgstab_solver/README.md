@@ -353,21 +353,6 @@ may terminate before reaching the prescribed tolerance.
 A numerical breakdown does not necessarily imply that the original
 linear system has no solution.
 
-#### Available Preconditioners
-
-The solver provides several preconditioning options.
-
-| Preconditioner | Identifier | Description |
-|:---|:---:|:---|
-| None | `None` | Unpreconditioned BiCGSTAB |
-| Jacobi | `"jacobi"` | Diagonal preconditioning |
-| LU | `"lu"` | LU factorization |
-| ILU | `"ilu"` | Incomplete LU factorization |
-| Cholesky | `"cholesky"` | Exact Cholesky factorization for Hermitian positive-definite systems |
-| IC(0) | `"ic0"` | Incomplete Cholesky with zero fill-in |
-| SSOR | `"ssor"` | Symmetric successive over-relaxation |
-| Custom | `"custom"` | User-defined inverse action |
-
 ### Implementation:
 
 Supports real and complex dense matrices, SciPy sparse matrices,
