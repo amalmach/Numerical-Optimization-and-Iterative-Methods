@@ -266,7 +266,7 @@ $\displaystyle
 y_m
 =
 \underset{y\in\mathbb{F}^{m}}
-{\operatorname{arg\,min}}
+{\mathrm{arg\,min}}
 \left\|
 \beta e_1-\overline{H}_my
 \right\|_2.
