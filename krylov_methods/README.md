@@ -35,7 +35,7 @@ The Krylov subspace of dimension $m$ is
 
 <p align="center">
 $\displaystyle \mathcal K_m(A,r_0)=
-\operatorname{span}\{r_0,Ar_0,A^2r_0,\ldots,A^{m-1}r_0\}.$
+\mathrm{span}\{r_0,Ar_0,A^2r_0,\ldots,A^{m-1}r_0\}.$
 </p>
 
 Different algorithms choose different bases, projection conditions, and
