@@ -350,6 +350,40 @@ The shared module does **not** rewrite these solver recurrences. Set
 `require_spd=True` for CG; this rejects generic LU and ILU, but still requires
 the user to supply an HPD system and valid custom actions.
 
+## Important Numerical Considerations
+
+The following considerations apply broadly to preconditioned
+iterative methods, including CG, GMRES, and BiCGSTAB:
+
+- The preconditioner should be computationally inexpensive to apply.
+- Explicit computation of $M^{-1}$ is generally unnecessary;
+  instead, the action $z=M^{-1}r$ is obtained by solving a
+  preconditioning system.
+- A suitable preconditioner can reduce the number of iterations
+  required for convergence.
+- Preconditioning does not necessarily reduce the total
+  computational time.
+- The cost of constructing, storing, and applying the
+  preconditioner must be considered.
+- Standard preconditioned CG, GMRES, and BiCGSTAB formulations
+  assume a fixed linear preconditioner, although flexible
+  variants exist.
+- Singular or poorly conditioned preconditioners can introduce
+  numerical difficulties.
+- The mathematical properties required of the preconditioner
+  depend on the iterative method.
+
+Finite-precision arithmetic may introduce numerical errors,
+loss of orthogonality, stagnation, or breakdown. Appropriate
+numerical safeguards depend on the algorithm and may include
+checks for near-zero denominators, non-finite values, and
+consistency between recursively updated and true residuals.
+
+For standard Preconditioned Conjugate Gradient (PCG), the
+preconditioner must be fixed and symmetric/Hermitian
+positive definite. GMRES and BiCGSTAB can accommodate
+a broader class of nonsymmetric preconditioners.
+
 ## Python interface
 
 From the repository root:
