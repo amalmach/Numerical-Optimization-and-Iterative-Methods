@@ -56,11 +56,11 @@ formulations become conjugate-transpose (Hermitian) products.
 
 | Method | Main purpose | Solver package | Mathematical description |
 |:---|:---|:---|:---|
-| **Conjugate Gradient (CG/PCG)** | Short-recurrence solver for symmetric / Hermitian positive-definite systems | [CG](conjugate_gradient_solver/README.md) | [Formulation](Mathematical_formulation_and_algorithms/2.conjugate-gradient-method.md) |
-| **GMRES** | Residual-minimizing solver for general nonsymmetric systems; restarted and unrestarted variants | [GMRES](gmres_solver/README.md) | [Formulation](Mathematical_formulation_and_algorithms/3.generalized-minimal-residual-gmres.md) |
-| **BiCGSTAB** | Short-recurrence stabilized solver for general nonsymmetric systems | [BiCGSTAB](bicgstab_solver/README.md) | [Formulation](Mathematical_formulation_and_algorithms/4.bi-conjugate-gradient-stabilized-bicgstab.md) |
-| **Symmetric Lanczos** | Orthonormal basis construction, tridiagonalization, Ritz values, and optional Galerkin approximation | [Lanczos](symmetric_lanczos_solver/README.md) | [Formulation](Mathematical_formulation_and_algorithms/5.symmetric-lanczos-algorithm.md) |
-| **Shared preconditioning** | Jacobi, LU, ILU, Cholesky, IC(0), SSOR, and custom inverse actions | [Preconditioning methods](preconditioners/README.md) | [Theory and use](preconditioners/README.md) |
+| **Conjugate Gradient (CG/PCG)** | Short-recurrence solver for symmetric / Hermitian positive-definite systems | [CG](conjugate_gradient_solver/ConjugateGradient.py) | [Formulation](conjugate_gradient_solver/README.md) |
+| **GMRES** | Residual-minimizing solver for general nonsymmetric systems; restarted and unrestarted variants | [GMRES](gmres_solver/GMRES.py) | [Formulation](gmres_solver/README.md) |
+| **BiCGSTAB** | Short-recurrence stabilized solver for general nonsymmetric systems | [BiCGSTAB](bicgstab_solver/BiCGSTAB.py) | [Formulation](bicgstab_solver/README.md) |
+| **Symmetric Lanczos** | Orthonormal basis construction, tridiagonalization, Ritz values, and optional Galerkin approximation | [Lanczos](symmetric_lanczos_solver/Lanczos.py) | [Formulation](symmetric_lanczos_solver/README.md) |
+| **Shared preconditioning** | Jacobi, LU, ILU, Cholesky, IC(0), SSOR, and custom inverse actions | [Preconditioning methods](preconditioners/preconditioners.py) | [Theory and use](preconditioners/README.md) |
 
 **Steepest Descent** is a gradient-based baseline and lives in the separate
 [`gradient_methods/steepest_descent_solver`](../gradient_methods/steepest_descent_solver/README.md)
