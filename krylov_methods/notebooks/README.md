@@ -6,9 +6,6 @@ These notebooks examine the project's **modular iterative solvers**, compare
 them against SciPy where appropriate, and visualize convergence, conditioning,
 preconditioning, and spectral approximations.
 
-Steepest Descent is a **gradient-based baseline** and lives in
-[`gradient_methods/`](../../gradient_methods/).
-
 </div>
 
 ---
@@ -22,7 +19,6 @@ Steepest Descent is a **gradient-based baseline** and lives in
 | BiCGSTAB | [BiCGSTAB](bicgstab_demo.ipynb) | [Launch BiCGSTAB](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/HEAD?labpath=krylov_methods%2Fnotebooks%2Fbicgstab_demo.ipynb) |
 | Symmetric Lanczos | [Lanczos](symmetric_lanczos_demo.ipynb) | [Launch Lanczos](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/HEAD?labpath=krylov_methods%2Fnotebooks%2Fsymmetric_lanczos_demo.ipynb) |
 | **Cross-method comparison** | [Comparison](krylov_comparison.ipynb) | [Launch comparison](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/HEAD?labpath=krylov_methods%2Fnotebooks%2Fkrylov_comparison.ipynb) |
-| Steepest Descent (gradient method) | [Steepest Descent](../../gradient_methods/notebooks/steepest_descent_demo.ipynb) | [Launch Steepest Descent](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/HEAD?labpath=gradient_methods%2Fnotebooks%2Fsteepest_descent_demo.ipynb) |
 
 ## Cross-method comparison
 
@@ -35,6 +31,9 @@ solver packages**:
 - `krylov_methods.bicgstab_solver`: BiCGSTAB for nonsymmetric systems.
 - `krylov_methods.symmetric_lanczos_solver`: tridiagonalization and optional
   Galerkin linear-system approximation.
+
+Steepest Descent is a **gradient-based baseline** and lives in
+[`gradient_methods/`](../../gradient_methods/).
 
 The comparison notebook includes three interactive experiments:
 
