@@ -380,3 +380,11 @@ python3 -m krylov_methods.symmetric_lanczos_solver.example
 2. Y. Saad (2011), *Numerical Methods for Large Eigenvalue Problems*, 2nd ed., SIAM.
 3. G. H. Golub and C. F. Van Loan (2013), *Matrix Computations*, 4th ed., Johns Hopkins University Press.
 4. A. Greenbaum (1997), *Iterative Methods for Solving Linear Systems*, SIAM.
+
+---
+
+<div align="center">
+
+[⬅ Back to Krylov Methods](../README.md)
+
+</div>
