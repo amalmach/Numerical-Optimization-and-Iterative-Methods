@@ -51,7 +51,7 @@ Its main advantages include:
 | File | Purpose |
 |---|---|
 | [BiCGSTAB.py](BiCGSTAB.py) | BiCGSTAB iterations, stopping criteria, residual history |
-| [Preconditioners](../preconditioners/preconditioners.py) | Shared Preconditioner implementations |
+| [preconditioners.py](../preconditioners/preconditioners.py) | Shared Preconditioner implementations |
 | [test_bicgstab.py](test_bicgstab.py) | Numerical regression tests against SciPy |
 | [example.py](example.py) | Executable demonstration |
 
