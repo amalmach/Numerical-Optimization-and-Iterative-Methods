@@ -175,7 +175,7 @@ The implementation also detects nonfinite objective values or gradient norms.
 | [test_fixed_step_gradient.py](test_fixed_step_gradient.py) | Numerical regression tests |
 | [example.py](example.py) | Reproducible numerical experiments |
 | [__init__.py](__init__.py) | Public package interface |
-| [fixed_step_gradient_demo.ipynb](../    notebooks/fixed_step_gradient_demo.ipynb) | Original implementation and experiments |
+| [fixed_step_gradient_demo.ipynb](../notebooks/fixed_step_gradient_demo.ipynb) | Original implementation and experiments |
 
 ### Python interface
 
