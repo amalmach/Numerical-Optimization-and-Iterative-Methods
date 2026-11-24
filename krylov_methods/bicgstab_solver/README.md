@@ -314,25 +314,6 @@ $\rho_k$, $\alpha_k$, $\beta_k$, and $\omega_k$
 retain their classical form, using the modified
 matrix-vector products.
 
-#### Important Numerical Considerations
-
-- The preconditioner should be inexpensive to apply.
-- Explicit computation of $M^{-1}$ is generally unnecessary.
-- A suitable preconditioner can reduce the number of iterations.
-- Preconditioning does not guarantee faster convergence.
-- The cost of constructing and applying the preconditioner
-  must be considered.
-- The implementation assumes a fixed linear preconditioner
-  throughout the iteration.
-- A singular or poorly conditioned preconditioner
-  can cause numerical difficulties.
-
-In finite-precision arithmetic, the implementation checks for numerical
-breakdown using smallness thresholds and finite-value checks. These
-safeguards help prevent unstable divisions and invalid numerical
-operations, although their effectiveness depends on the scaling
-and conditioning of the linear system.
-
 #### Numerical Breakdown
 
 BiCGSTAB may encounter numerical breakdown when certain scalar
