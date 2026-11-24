@@ -113,12 +113,11 @@ together while respecting their mathematical applicability.
 | GMRES | [Open](notebooks/gmres_demo.ipynb) | [Launch](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/HEAD?labpath=krylov_methods%2Fnotebooks%2Fgmres_demo.ipynb) |
 | BiCGSTAB | [Open](notebooks/bicgstab_demo.ipynb) | [Launch](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/HEAD?labpath=krylov_methods%2Fnotebooks%2Fbicgstab_demo.ipynb) |
 | Symmetric Lanczos | [Open](notebooks/symmetric_lanczos_demo.ipynb) | [Launch](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/HEAD?labpath=krylov_methods%2Fnotebooks%2Fsymmetric_lanczos_demo.ipynb) |
-| Steepest Descent (gradient methods) | [Open](../gradient_methods/notebooks/steepest_descent_demo.ipynb) | [Launch](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/HEAD?labpath=gradient_methods%2Fnotebooks%2Fsteepest_descent_demo.ipynb) |
 
 The notebook suite shares test-problem generators and plotting utilities in
 [`notebooks/notebook_utils.py`](notebooks/notebook_utils.py). To see the
 experiments and the Binder requirements, visit the
-[`notebooks/` README](notebooks/README.md).
+[`notebooks/README`](notebooks/README.md).
 
 ### Numerical questions explored
 
