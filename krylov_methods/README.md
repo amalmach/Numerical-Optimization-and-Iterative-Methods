@@ -192,3 +192,12 @@ python3 -m gradient_methods.steepest_descent_solver.example
 4. H. A. van der Vorst, *Bi-CGSTAB: A Fast and Smoothly Converging Variant of Bi-CG for the Solution of Nonsymmetric Linear Systems*, 1992.
 5. C. Lanczos, *An Iteration Method for the Solution of the Eigenvalue Problem of Linear Differential and Integral Operators*, 1950.
 6. G. H. Golub and C. F. Van Loan, *Matrix Computations*, 4th ed., Johns Hopkins University Press, 2013.
+
+
+---
+
+<div align="center">
+
+[⬅ Back to Main Repository](../README.md)
+
+</div>
