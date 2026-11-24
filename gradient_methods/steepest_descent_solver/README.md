@@ -25,7 +25,7 @@ conjugate search directions, is a useful Krylov-method comparator.
 
 For complex HPD systems use the real-valued energy
 
-<p align="center">$\displaystyle f(x)=\frac12 x^HAx-\operatorname{Re}(b^Hx),$</p>
+<p align="center">$\displaystyle f(x)=\frac12 x^HAx-\mathrm{Re}(b^Hx),$</p>
 
 and replace transposes with conjugate transposes.
 
