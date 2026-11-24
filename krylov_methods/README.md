@@ -77,6 +77,9 @@ package. It is included in the comparison notebook alongside the Krylov methods.
   Its optional Galerkin solver should not be confused with a robust
   general symmetric-indefinite solver such as MINRES.
 
+> **Notation: Throughout this documentation, SPD refers to real symmetric
+> positive-definite matrices, and PD to positive-definite matrices.
+
 ## Preconditioning
 
 Preconditioning aims to improve convergence by applying an approximation to
