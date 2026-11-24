@@ -79,3 +79,12 @@ moderate Krylov dimensions, and reasonable iteration budgets.
 - Compare individual preconditioners in the CG, GMRES, and BiCGSTAB notebooks.
   For formulas and implementation restrictions, see the shared
   [Preconditioning Methods](../preconditioners/README.md) documentation.
+
+
+---
+
+<div align="center">
+
+[⬅ Back to Krylov Methods](../README.md)
+
+</div>
