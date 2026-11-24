@@ -157,9 +157,9 @@ $\displaystyle \beta_k=\frac{r_{k+1}^Tz_{k+1}}{r_k^Tz_k}.$
 $p_{k+1}=z_{k+1}+\beta_kp_k.$
 </p>
 
-These are the only changes to the classical iteration. Unlike GMRES or
-BiCGSTAB, a generic nonsymmetric ILU inverse is not suitable for PCG.
-For complex systems, transpose products become Hermitian inner products.
+> **Note:** These are the only changes to the classical iteration. Unlike GMRES or
+> BiCGSTAB, a generic nonsymmetric ILU inverse is not suitable for PCG.
+> For complex systems, transpose products become Hermitian inner products.
 
 ### Numerical properties
 
@@ -227,9 +227,6 @@ Available preconditioners: `None`, `"jacobi"`, `"ssor"`,
 
 All preconditioners used with CG must define a fixed Hermitian
 positive-definite inverse action.
-
-For mathematical formulations and implementation details, see the
-[Preconditioning Methods](../preconditioners/README.md) documentation.
 
 Exact Cholesky and the educational IC(0) implementation use
 dense intermediate storage and may be unsuitable for large
