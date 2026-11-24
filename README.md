@@ -38,6 +38,7 @@ Clone the repository:
 
 ```bash
 git clone https://github.com/amalmach/Numerical-Optimization-and-Iterative-Methods.git
+```
 
 ---
 
