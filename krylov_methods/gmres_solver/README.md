@@ -54,7 +54,7 @@ linear system.
 | [hessenberg.py](hessenberg.py) | Hessenberg workspace and projection helper |
 | [givens.py](givens.py) | Stable Givens rotations and right-hand-side updates |
 | [least_squares.py](least_squares.py) | Reduced triangular solve with rank-deficient fallback |
-| [Preconditioners](../preconditioners/preconditioners.py) | Shared Preconditioner implementations |
+| [preconditioners.py](../preconditioners/preconditioners.py) | Shared Preconditioner implementations |
 | [GMRES.py](GMRES.py) | Solver options, convergence, restarting, result metadata |
 | [example.py](example.py) | Executable usage examples |
 | [test_gmres.py](test_gmres.py) | Regression tests against SciPy |
