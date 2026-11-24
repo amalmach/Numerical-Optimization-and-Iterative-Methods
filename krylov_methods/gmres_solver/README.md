@@ -570,9 +570,6 @@ Record $\rho_k$ in the convergence history.
 
 If $\rho_k\leq\varepsilon$, stop the Arnoldi iterations.
 
-If Arnoldi termination occurred, proceed to
-solution reconstruction and verify convergence.
-
 **End For**
 
 ### Step 3 — Solution Reconstruction
