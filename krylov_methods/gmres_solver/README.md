@@ -9,6 +9,33 @@ algorithms, restarted variants, and preconditioning techniques.
 
 ---
 
+## Interactive GMRES Dashboard
+
+Explore the Generalized Minimal Residual (GMRES) method through
+interactive numerical experiments for general nonsymmetric linear
+systems, including real and complex problems.
+
+Investigate standard and restarted GMRES, examine the influence of
+restart parameters and left preconditioning, and visualize convergence
+behavior. Compare numerical results with SciPy and explore how
+matrix properties affect residual reduction and solution accuracy.
+
+[![Launch Interactive Dashboard](https://img.shields.io/badge/LAUNCH-INTERACTIVE%20DASHBOARD-2ea44f?style=for-the-badge)](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/main?urlpath=voila%2Frender%2Fkrylov_methods%2Fnotebooks%2Fgmres_demo.ipynb)
+
+![GMRES interactive dashboard](../../docs/images/gmres_dashboard.png)
+
+The dashboard runs directly in your browser using Binder and Voilà.
+**No local installation is required.**
+
+The [Jupyter notebook](../notebooks/gmres_demo.ipynb)
+is also available for users who wish to inspect or modify the Python code.
+
+> **Computational resources:** Binder provides limited CPU and memory
+> resources. Larger systems or demanding experiments may take longer
+> to execute. The first launch may also require environment initialization.
+
+---
+
 ### Main Idea
 
 The **Generalized Minimal Residual (GMRES)** method is an iterative

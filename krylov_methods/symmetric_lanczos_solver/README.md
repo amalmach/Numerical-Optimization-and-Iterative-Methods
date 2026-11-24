@@ -7,6 +7,32 @@ matrices, with an optional Galerkin approximation to linear systems.
 
 </div>
 
+## Interactive Symmetric Lanczos Dashboard
+
+Explore the Symmetric Lanczos algorithm through interactive numerical
+experiments for real symmetric and complex Hermitian matrices.
+
+Investigate Krylov basis construction, tridiagonalization, and Ritz
+eigenvalue approximations. Visualize orthogonality errors, examine
+the effects of reorthogonalization, and explore the accuracy of
+the optional Galerkin approximation for linear systems.
+
+[![Launch Interactive Dashboard](https://img.shields.io/badge/LAUNCH-INTERACTIVE%20DASHBOARD-2ea44f?style=for-the-badge)](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/main?urlpath=voila%2Frender%2Fkrylov_methods%2Fnotebooks%2Fsymmetric_lanczos_demo.ipynb)
+
+![Symmetric Lanczos interactive dashboard](../../docs/images/symmetric_lanczos_dashboard.png)
+
+The dashboard runs directly in your browser using Binder and Voilà.
+**No local installation is required.**
+
+The [Jupyter notebook](../notebooks/symmetric_lanczos_demo.ipynb)
+is also available for users who wish to inspect or modify the Python code.
+
+> **Computational resources:** Binder provides limited CPU and memory
+> resources. Larger systems or demanding experiments may take longer
+> to execute. The first launch may also require environment initialization.
+
+---
+
 ### Main idea
 
 The **Symmetric Lanczos algorithm** is a Krylov subspace method

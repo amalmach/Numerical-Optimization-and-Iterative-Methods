@@ -7,6 +7,33 @@ with convergence diagnostics, tests, and numerical examples.
 
 </div>
 
+## Interactive Conjugate Gradient Dashboard
+
+Explore Conjugate Gradient (CG) and preconditioned Conjugate Gradient (PCG)
+through interactive numerical experiments for real symmetric positive-definite
+and complex Hermitian positive-definite linear systems.
+
+Select the matrix size, condition number, stopping tolerances, and
+preconditioner. Run experiments to compare convergence against SciPy,
+visualize residual histories and solution errors, and explore the relationship
+between residual accuracy and forward error.
+
+[![Launch Interactive Dashboard](https://img.shields.io/badge/LAUNCH-INTERACTIVE%20DASHBOARD-2ea44f?style=for-the-badge)](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/main?urlpath=voila%2Frender%2Fkrylov_methods%2Fnotebooks%2Fconjugate_gradient_demo.ipynb)
+
+![Conjugate Gradient interactive dashboard](../../docs/images/conjugate_gradient_dashboard.png)
+
+The dashboard runs in your browser using Binder and Voilà.
+**No local installation is required.**
+
+The [Jupyter notebook](../notebooks/conjugate_gradient_demo.ipynb)
+is also available for users who wish to inspect or modify the Python code.
+
+> **Computational resources:** Binder provides limited CPU and memory
+> resources. Larger systems or demanding experiments may take longer
+> to execute. The first launch may also require environment initialization.
+
+---
+
 ### Main idea
 
 The Conjugate Gradient (CG) method improves upon Steepest

@@ -12,6 +12,33 @@ convergence diagnostics, numerical tests, and scientific examples.
 
 ---
 
+## Interactive BiCGSTAB Dashboard
+
+Explore the Bi-Conjugate Gradient Stabilized (BiCGSTAB) method through
+interactive numerical experiments for general nonsymmetric linear systems,
+including real and complex problems.
+
+Investigate convergence behavior, examine the effects of right
+preconditioning, and visualize residual histories and solution errors.
+Compare numerical results with SciPy and explore how matrix properties
+influence convergence and numerical accuracy.
+
+[![Launch Interactive Dashboard](https://img.shields.io/badge/LAUNCH-INTERACTIVE%20DASHBOARD-2ea44f?style=for-the-badge)](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/main?urlpath=voila%2Frender%2Fkrylov_methods%2Fnotebooks%2Fbicgstab_demo.ipynb)
+
+![BiCGSTAB interactive dashboard](../../docs/images/bicgstab_dashboard.png)
+
+The dashboard runs directly in your browser using Binder and Voilà.
+**No local installation is required.**
+
+The [Jupyter notebook](../notebooks/bicgstab_demo.ipynb)
+is also available for users who wish to inspect or modify the Python code.
+
+> **Computational resources:** Binder provides limited CPU and memory
+> resources. Larger systems or demanding experiments may take longer
+> to execute. The first launch may also require environment initialization.
+
+---
+
 ### Main idea
 
 BiCGSTAB is an iterative Krylov subspace method for solving

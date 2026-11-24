@@ -8,6 +8,34 @@ an interactive notebook.
 
 </div>
 
+## Interactive Steepest Descent Dashboard
+
+Explore the Steepest Descent method through interactive numerical
+experiments for real symmetric positive-definite and complex Hermitian
+positive-definite linear systems.
+
+Investigate exact line search for quadratic optimization, examine
+the influence of matrix conditioning on convergence, and visualize
+residual histories and solution errors. Compare convergence with
+Conjugate Gradient to understand the differences between gradient
+directions and conjugate search directions.
+
+[![Launch Interactive Dashboard](https://img.shields.io/badge/LAUNCH-INTERACTIVE%20DASHBOARD-2ea44f?style=for-the-badge)](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/main?urlpath=voila%2Frender%2Fgradient_methods%2Fnotebooks%2Fsteepest_descent_demo.ipynb)
+
+![Steepest Descent interactive dashboard](../../docs/images/steepest_descent_dashboard.png)
+
+The dashboard runs directly in your browser using Binder and Voilà.
+**No local installation is required.**
+
+The [Jupyter notebook](../notebooks/steepest_descent_demo.ipynb)
+is also available for users who wish to inspect or modify the Python code.
+
+> **Computational resources:** Binder provides limited CPU and memory
+> resources. Larger systems or demanding experiments may take longer
+> to execute. The first launch may also require environment initialization.
+
+---
+
 ### Main idea
 
 For a positive-definite system $Ax=b$, Steepest Descent can be interpreted as
