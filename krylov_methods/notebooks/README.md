@@ -1,3 +1,5 @@
+<div align="center">
+  
 # Interactive Krylov Solver Notebooks
 
 These notebooks examine the project's **modular iterative solvers**, compare
@@ -6,6 +8,10 @@ preconditioning, and spectral approximations.
 
 Steepest Descent is a **gradient-based baseline** and lives in
 [`gradient_methods/`](../../gradient_methods/).
+
+</div>
+
+---
 
 ## Interactive notebooks
 
