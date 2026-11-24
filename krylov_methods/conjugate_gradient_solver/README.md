@@ -248,3 +248,11 @@ python3 -m krylov_methods.conjugate_gradient_solver.example
 2. J. R. Shewchuk (1994), *An Introduction to the Conjugate Gradient Method Without the Agonizing Pain*.
 3. Y. Saad (2003), *Iterative Methods for Sparse Linear Systems*, 2nd ed., SIAM.
 4. A. Greenbaum (1997), *Iterative Methods for Solving Linear Systems*, SIAM.
+
+---
+
+<div align="center">
+
+[⬅ Back to Krylov Methods](../README.md)
+
+</div>
