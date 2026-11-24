@@ -388,3 +388,11 @@ python -m krylov_methods.preconditioners.example
 1. Y. Saad (2003), *Iterative Methods for Sparse Linear Systems*, 2nd ed., SIAM.
 2. M. Benzi (2002), *Preconditioning Techniques for Large Linear Systems: A Survey*, Journal of Computational Physics, 182(2), 418–477.
 3. A. Greenbaum (1997), *Iterative Methods for Solving Linear Systems*, SIAM.
+
+---
+
+<div align="center">
+
+[⬅ Back to Krylov Methods](../README.md)
+
+</div>
