@@ -43,7 +43,7 @@ of the error.
 | File | Purpose |
 |:---|:---|
 | [ConjugateGradient.py](ConjugateGradient.py) | CG/PCG implementation and structured result |
-| [Preconditioners](../preconditioners/preconditioners.py) | Shared Preconditioner implementations |
+| [preconditioners.py](../preconditioners/preconditioners.py) | Shared Preconditioner implementations |
 | [test_conjugate_gradient.py](test_conjugate_gradient.py) | Numerical regression tests against SciPy |
 | [example.py](example.py) | Reproducible numerical demonstration |
 
