@@ -237,3 +237,11 @@ The experiments compare different fixed step sizes and demonstrate how they infl
 1. J. Nocedal and S. J. Wright, *Numerical Optimization*, 2nd ed., Springer, 2006.
 2. D. P. Bertsekas, *Nonlinear Programming*, 3rd ed., Athena Scientific, 2016.
 3. Y. Nesterov, *Introductory Lectures on Convex Optimization: A Basic Course*, Kluwer Academic Publishers, 2004.
+
+---
+
+<div align="center">
+
+[⬅ Back to Gradient Methods](../README.md)
+
+</div>
