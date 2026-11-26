@@ -18,6 +18,7 @@ This directory contains reusable Python solvers, numerical tests, mathematical d
 | **Steepest Descent** | [Solver](steepest_descent_solver/SteepestDescent.py) | [README](steepest_descent_solver/README.md) | [Notebook](notebooks/steepest_descent_demo.ipynb) | [Launch Dashboard](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/main?urlpath=voila%2Frender%2Fgradient_methods%2Fnotebooks%2Fsteepest_descent_demo.ipynb) |
 | **Gradient Methods Comparison** | Fixed-Step vs Steepest Descent | — | [Notebook](notebooks/gradient_methods_comparison_demo.ipynb) | [Launch Dashboard](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/main?urlpath=voila%2Frender%2Fgradient_methods%2Fnotebooks%2Fgradient_methods_comparison_demo.ipynb) |
 
+> Binder may require some time to initialize the environment on the first launch.
 
 ## Mathematical Overview
 
@@ -71,20 +72,6 @@ The interactive dashboard provides:
 **Notebook:** [gradient_methods_comparison_demo.ipynb](notebooks/gradient_methods_comparison_demo.ipynb)
 
 > **Numerical note:** For the quadratic objectives used in this comparison, the Hessian is \(2I\). Consequently, exact-line-search Steepest Descent reaches the minimizer in one iteration (up to floating-point precision).
-
----
-
-### Fixed-Step Gradient Descent
-
-[![Launch Fixed-Step Gradient Dashboard](https://img.shields.io/badge/LAUNCH-FIXED--STEP%20GRADIENT-2ea44f?style=for-the-badge)](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/main?urlpath=voila%2Frender%2Fgradient_methods%2Fnotebooks%2Ffixed_step_gradient_demo.ipynb)
-
-![Fixed-Step Gradient Dashboard](../docs/images/fixed_step_gradient_dashboard.png)
-
-### Steepest Descent
-
-[![Launch Steepest Descent Dashboard](https://img.shields.io/badge/LAUNCH-STEEPEST%20DESCENT-2ea44f?style=for-the-badge)](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/main?urlpath=voila%2Frender%2Fgradient_methods%2Fnotebooks%2Fsteepest_descent_demo.ipynb)
-
-> Binder may require some time to initialize the environment on the first launch.
 
 ## Run the Tests
 
