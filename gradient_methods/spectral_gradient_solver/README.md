@@ -50,21 +50,17 @@ $</p>
 ### BB1 — First Barzilai–Borwein Step
 
 <p align="center">$\displaystyle
-\boxed{
 \alpha_k^{BB1}=
 \frac{s_{k-1}^{T}s_{k-1}}
-{s_{k-1}^{T}y_{k-1}}
-}
+{s_{k-1}^{T}y_{k-1}}.
 $</p>
 
 ### BB2 — Second Barzilai–Borwein Step
 
 <p align="center">$\displaystyle
-\boxed{
 \alpha_k^{BB2}=
 \frac{s_{k-1}^{T}y_{k-1}}
-{y_{k-1}^{T}y_{k-1}}
-}
+{y_{k-1}^{T}y_{k-1}}.
 $</p>
 
 Both variants require an initial positive step size $\alpha_0$.
@@ -78,18 +74,18 @@ The solver supports five objectives:
 ### Quadratic Objectives
 
 <p align="center">$\displaystyle
-J_1(x)=\sum_{i=1}^{n}(x_i-1)^2
+J_1(x)=\sum_{i=1}^{n}(x_i-1)^2.
 $</p>
 
 <p align="center">$\displaystyle
-J_2(x)=\sum_{i=1}^{n}(x_i-i)^2
+J_2(x)=\sum_{i=1}^{n}(x_i-i)^2.
 $</p>
 
 ### Tridiagonal Quadratic Objective
 
 <p align="center">$\displaystyle
 J_5(x)=
-\frac12 x^TAx-\mathbf{1}^Tx+\|x\|_2^2
+\frac12 x^TAx-\mathbf{1}^Tx+\|x\|_2^2.
 $</p>
 
 where
