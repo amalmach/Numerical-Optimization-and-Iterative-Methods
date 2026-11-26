@@ -18,15 +18,15 @@ Gradient methods minimize differentiable objective functions by iteratively movi
 \min_{x \in \mathbb{R}^n} f(x).
 $</p>
 
-Starting from an initial point \(x_0\), the general iteration is
+Starting from an initial point $x_0$, the general iteration is
 
 <p align="center">$\displaystyle
 x_{k+1}=x_k-\alpha_k\nabla f(x_k),
 $</p>
 
-where \(\nabla f(x_k)\) is the gradient and \(\alpha_k>0\) is the step size.
+where $\nabla f(x_k)$ is the gradient and $\alpha_k>0$ is the step size.
 
-Different gradient methods are distinguished by how they choose \(\alpha_k\):
+Different gradient methods are distinguished by how they choose $\alpha_k$:
 
 - **Fixed-Step Gradient Descent:** Uses a constant step size.
 - **Steepest Descent:** Determines the step size using a line-search procedure.
