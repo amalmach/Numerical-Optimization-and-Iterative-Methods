@@ -10,55 +10,65 @@ This directory contains reusable Python solvers, numerical tests, mathematical d
 
 ---
 
-## Main idea
-
-Gradient methods minimize differentiable objective functions by iteratively moving in the direction of the negative gradient. Consider
-
-<p align="center">$\displaystyle
-\min_{x \in \mathbb{R}^n} f(x).
-$</p>
-
-Starting from an initial point $x_0$, the general iteration is
-
-<p align="center">$\displaystyle
-x_{k+1}=x_k-\alpha_k\nabla f(x_k),
-$</p>
-
-where $\nabla f(x_k)$ is the gradient and $\alpha_k>0$ is the step size.
-
-Different gradient methods are distinguished by how they choose $\alpha_k$:
-
-- **Fixed-Step Gradient Descent:** Uses a constant step size.
-- **Steepest Descent:** Determines the step size using a line-search procedure.
-- **Spectral Gradient (BB1/BB2):** Estimates the step size from differences between successive iterates and gradients.
-
-Convergence depends on the objective function and the step-size strategy. In particular, spectral gradient methods may exhibit nonmonotonic objective values.
-
-## Implemented methods
+## Available Methods
 
 | Method | Implementation | Documentation | Interactive Notebook | Voilà Dashboard |
 |---|---|---|---|---|
 | **Fixed-Step Gradient Descent** | [Solver](fixed_step_gradient_solver/FixedStepGradient.py) | [README](fixed_step_gradient_solver/README.md) | [Notebook](notebooks/fixed_step_gradient_demo.ipynb) | [Launch Dashboard](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/main?urlpath=voila%2Frender%2Fgradient_methods%2Fnotebooks%2Ffixed_step_gradient_demo.ipynb) |
 | **Steepest Descent** | [Solver](steepest_descent_solver/SteepestDescent.py) | [README](steepest_descent_solver/README.md) | [Notebook](notebooks/steepest_descent_demo.ipynb) | [Launch Dashboard](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/main?urlpath=voila%2Frender%2Fgradient_methods%2Fnotebooks%2Fsteepest_descent_demo.ipynb) |
-| **Gradient Methods Comparison** | Fixed-Step vs Steepest Descent | — | [Notebook](notebooks/gradient_methods_comparison_demo.ipynb) | [Launch Dashboard](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/main?urlpath=voila%2Frender%2Fgradient_methods%2Fnotebooks%2Fgradient_methods_comparison_demo.ipynb) |
 | **Spectral Gradient (BB1/BB2)** | [Solver](spectral_gradient_solver/SpectralGradient.py) | [README](spectral_gradient_solver/README.md) | [Notebook](notebooks/spectral_gradient_demo.ipynb) | [Launch Dashboard](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/main?urlpath=voila%2Frender%2Fgradient_methods%2Fnotebooks%2Fspectral_gradient_demo.ipynb) |
+| **Gradient Methods Comparison** | Fixed-Step vs Steepest Descent vs Spectral (BB1/BB2) | — | [Notebook](notebooks/gradient_methods_comparison_demo.ipynb) | [Launch Dashboard](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/main?urlpath=voila%2Frender%2Fgradient_methods%2Fnotebooks%2Fgradient_methods_comparison_demo.ipynb) |
 
 > Binder may require some time to initialize the environment on the first launch.
 
-## Interactive Dashboards
+## Mathematical Overview
 
-The Voilà dashboards let you run experiments directly in your browser without installing Python locally.
+Both methods minimize a differentiable objective function:
 
-### Gradient Methods Comparison Dashboard
+<p align="center">$\displaystyle \min_{x \in \mathbb{R}^n} f(x).
+$</p>
 
-Compare **Fixed-Step Gradient Descent** and **Steepest Descent with Exact Line Search** on identical quadratic optimization problems.
+The general gradient iteration is:
 
-The interactive dashboard provides:
+<p align="center">$\displaystyle x_{k+1} = x_k - \alpha_k \nabla f(x_k).
+$</p>
 
-- **Shared experiment controls:** Select the objective function, problem dimension, fixed step size, convergence tolerance, and iteration budget.
-- **Three convergence plots:** Compare objective values, gradient norms, and solution errors.
-- **Numerical comparison table:** Examine iteration counts, convergence status, final objective values, gradient norms, and solution errors.
-- **Interactive status indicators:** Identify when results are up to date or need to be recalculated.
+### Fixed-Step Gradient Descent
+
+Uses a constant learning rate:
+
+<p align="center">$\displaystyle \alpha_k = \alpha > 0.
+$</p>
+
+Its convergence depends on the objective function and the chosen step size.
+
+### Steepest Descent
+
+Uses the negative gradient as the search direction, with a step length determined by the algorithm:
+
+<p align="center">$\displaystyle x_{k+1} = x_k - \alpha_k \nabla f(x_k).
+$</p>
+
+See the individual method documentation for implementation details and numerical experiments.
+
+### Spectral Gradient (Barzilai–Borwein)
+
+Uses information from successive iterates and gradients to estimate suitable step sizes.
+
+Two variants are implemented:
+
+- **BB1:** Uses the ratio of the squared step norm to the step-gradient inner product.
+- **BB2:** Uses the ratio of the step-gradient inner product to the squared gradient-difference norm.
+
+Unlike exact line search, spectral step sizes do not necessarily produce a decrease in the objective at every iteration.
+
+See the [Spectral Gradient documentation](spectral_gradient_solver/README.md) for mathematical formulas, numerical safeguards, and experiments.
+
+## Interactive Gradient Methods Comparison Dashboard
+
+Compare **Fixed-Step Gradient Descent**, **Steepest Descent with Exact Line Search**, and the two **Barzilai–Borwein spectral gradient methods (BB1 and BB2)** on identical quadratic optimization problems.
+
+The interactive dashboard provides shared experiment controls, convergence plots for objective values, gradient norms, and solution errors, and a numerical table comparing all four methods. A status indicator reminds users to rerun the comparison whenever parameters change.
 
 [![Launch Gradient Methods Comparison Dashboard](https://img.shields.io/badge/LAUNCH-GRADIENT%20COMPARISON-2ea44f?style=for-the-badge)](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/main?urlpath=voila%2Frender%2Fgradient_methods%2Fnotebooks%2Fgradient_methods_comparison_demo.ipynb)
 
