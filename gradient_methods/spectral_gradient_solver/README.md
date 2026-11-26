@@ -10,7 +10,7 @@ Python implementations of spectral gradient methods for unconstrained numerical 
 
 ## Interactive Dashboard
 
-The interactive dashboard compares the **Barzilai–Borwein spectral gradient methods (BB1 and BB2)**, which adapt step sizes using successive iterates and gradients. It supports five objective functions (**J1, J2, J5, J6, and JR**), adjustable numerical parameters, convergence and spectral step-size plots, and a numerical comparison table. Results are generated using the **Run Comparison** button, with a reminder when parameters change. The implementation also includes convergence diagnostics, numerical safeguards, and automated regression tests.
+The interactive dashboard compares the **Barzilai–Borwein spectral gradient methods (BB1 and BB2)**, which adapt step sizes using successive iterates and gradients. It supports five objective functions (**J1, J2, J5, J6, and JR**), adjustable numerical parameters, convergence and spectral step-size plots, and a numerical comparison table. Results are generated using the **Run Comparison** button. The implementation also includes convergence diagnostics, numerical safeguards, and automated regression tests.
 
 [![Launch Interactive Dashboard](https://img.shields.io/badge/LAUNCH-INTERACTIVE%20DASHBOARD-2ea44f?style=for-the-badge)](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/main?urlpath=voila%2Frender%2Fgradient_methods%2Fnotebooks%2Fspectral_gradient_demo.ipynb)
 
