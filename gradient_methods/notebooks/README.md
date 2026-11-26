@@ -98,13 +98,11 @@ For online execution, the Binder links use the dependencies defined in `.binder/
 
 Open a notebook or its Voilà dashboard, configure the experiment parameters, and click **Run Comparison** or the corresponding execution button.
 
-The comparison and spectral dashboards display a reminder whenever parameters change, helping distinguish current results from outdated experiments.
-
 Binder is a public, resource-limited service. Start with moderate problem dimensions and iteration budgets.
 
 ## Interpretation notes
 
-- Gradient methods use updates of the form \(x_{k+1}=x_k-\alpha_k\nabla J(x_k)\), where the methods differ in their choice of step size.
+- Gradient methods use updates of the form $x_{k+1}=x_k-\alpha_k\nabla J(x_k)$, where the methods differ in their choice of step size.
 - **Fixed-Step Gradient Descent** uses a constant step size, making convergence sensitive to its selection.
 - **Steepest Descent** determines the step length through exact line search for the supported quadratic problems.
 - **BB1 and BB2** use differences between successive iterates and gradients to estimate spectral step sizes.
