@@ -22,7 +22,7 @@ The implementation supports five objective functions, convergence diagnostics, n
 
 Launch the interactive BB1 versus BB2 dashboard:
 
-[![Launch Voilà Dashboard](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/HEAD?urlpath=voila%2Frender%2Fgradient_methods%2Fnotebooks%2Fspectral_gradient_demo.ipynb)
+[![Launch Interactive Dashboard](https://img.shields.io/badge/LAUNCH-INTERACTIVE%20DASHBOARD-2ea44f?style=for-the-badge)](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/main?urlpath=voila%2Frender%2Fgradient_methods%2Fnotebooks%2Fspectral_gradient_demo.ipynb)
 
 **Notebook:** [spectral_gradient_demo.ipynb](../notebooks/spectral_gradient_demo.ipynb)
 
