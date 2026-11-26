@@ -23,8 +23,7 @@ Each section contains numerical implementations, scientific documentation, and c
 | Category | Numerical Methods | Documentation |
 |:---|:---|:---:|
 | **Linear Systems** | Krylov subspace methods | [Explore](krylov_methods/README.md) |
-| **Gradient Optimization** | Fixed-Step Gradient Descent, Steepest Descent, and interactive comparison | [Explore](gradient_methods/README.md) |
-| **Spectral Optimization** | Spectral gradient methods | [Explore](gradient_methods/README.md) |
+| **Gradient Optimization** | Gradient methods | [Explore](gradient_methods/README.md) |
 | **Global Optimization** | Efficient Global Optimization (EGO) | [Explore](global_optimization/README.md) |
 | **Nonlinear Systems** | Newton–GMRES methods | [Explore](nonlinear_solvers/README.md) |
 | **Optimization Benchmarks** | Rosenbrock function | [Explore](optimization_benchmarks/README.md) |
