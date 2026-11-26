@@ -38,41 +38,6 @@ The dashboard also provides interactive parameter controls and a status indicato
 
 For the quadratic objectives used in the comparison, the Hessian is \(2I\). Consequently, Steepest Descent with Exact Line Search reaches the minimizer in one iteration, up to floating-point precision.
 
-## Individual method dashboards
-
-### Fixed-Step Gradient Descent
-
-[`fixed_step_gradient_demo.ipynb`](fixed_step_gradient_demo.ipynb) illustrates gradient descent with a constant step size.
-
-The dashboard allows users to investigate how the learning rate, problem dimension, convergence tolerance, and iteration budget affect convergence.
-
-**Solver documentation:** [Fixed-Step Gradient Descent](../fixed_step_gradient_solver/README.md)
-
-### Steepest Descent
-
-[`steepest_descent_demo.ipynb`](steepest_descent_demo.ipynb) demonstrates Steepest Descent with Exact Line Search.
-
-It illustrates the influence of the objective function and stopping criteria on convergence.
-
-**Solver documentation:** [Steepest Descent](../steepest_descent_solver/README.md)
-
-### Spectral Gradient — BB1 and BB2
-
-[`spectral_gradient_demo.ipynb`](spectral_gradient_demo.ipynb) compares the two Barzilai–Borwein spectral gradient variants.
-
-The dashboard supports five objective functions:
-
-- **J1 and J2:** Quadratic objectives.
-- **J5:** Tridiagonal quadratic objective.
-- **J6:** Quartic-regularized objective.
-- **JR:** Rosenbrock-type objective.
-
-Users can adjust the problem dimension, initial step size, convergence tolerance, and maximum iteration count.
-
-The dashboard displays objective-value histories, gradient norms, spectral step sizes, and numerical comparison results.
-
-**Solver documentation:** [Spectral Gradient Methods](../spectral_gradient_solver/README.md)
-
 ## Shared setup and execution
 
 The notebooks use the numerical solvers implemented in the `gradient_methods/` directory.
