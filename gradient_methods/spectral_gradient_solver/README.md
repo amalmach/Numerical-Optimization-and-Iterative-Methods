@@ -67,13 +67,13 @@ $</p>
 }
 $</p>
 
-Both variants require an initial positive step size \(\alpha_0\).
+Both variants require an initial positive step size $\alpha_0$.
 
 Unlike line-search gradient methods, BB1 and BB2 do not necessarily decrease the objective function at every iteration.
 
 ## Supported Objective Functions
 
-The solver supports five objectives from the original `SpectralStepGradient.ipynb` notebook.
+The solver supports five objectives:
 
 ### Quadratic Objectives
 
@@ -95,7 +95,7 @@ $</p>
 where
 
 <p align="center">$\displaystyle
-A=\operatorname{tridiag}(-1,2,-1).
+A=\mathrm{tridiag}(-1,2,-1).
 $</p>
 
 ### Quartic-Regularized Objective
