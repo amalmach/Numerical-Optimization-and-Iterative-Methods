@@ -181,4 +181,9 @@ python3 -m unittest gradient_methods.spectral_gradient_solver.test_spectral_grad
 
 ---
 
+<div align="center">
+
 [⬅ Back to Gradient Methods](../README.md)
+
+</div>
+
