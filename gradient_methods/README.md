@@ -62,8 +62,6 @@ Two variants are implemented:
 
 Unlike exact line search, spectral step sizes do not necessarily produce a decrease in the objective at every iteration.
 
-See the [Spectral Gradient documentation](spectral_gradient_solver/README.md) for mathematical formulas, numerical safeguards, and experiments.
-
 ## Interactive Gradient Methods Comparison Dashboard
 
 Compare **Fixed-Step Gradient Descent**, **Steepest Descent with Exact Line Search**, and the two **Barzilai–Borwein spectral gradient methods (BB1 and BB2)** on identical quadratic optimization problems.
