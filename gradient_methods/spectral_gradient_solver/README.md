@@ -2,43 +2,28 @@
 
 # Spectral Gradient Methods
 
-### Barzilai–Borwein BB1 and BB2
-
-Python implementations of spectral gradient methods for unconstrained numerical optimization.
+Python implementations of spectral gradient methods for unconstrained numerical optimization. This module implements the two classical **Barzilai–Borwein methods**, BB1 and BB2.
 
 </div>
 
 ---
 
-## Overview
-
-Spectral gradient methods improve upon fixed-step gradient descent by selecting step sizes using information from successive iterates and gradients.
-
-This module implements the two classical **Barzilai–Borwein methods**, BB1 and BB2.
-
-The implementation supports five objective functions, convergence diagnostics, numerical safeguards, and automated regression tests.
-
 ## Interactive Dashboard
 
-Launch the interactive BB1 versus BB2 dashboard:
+The interactive dashboard compares the **Barzilai–Borwein spectral gradient methods (BB1 and BB2)**, which adapt step sizes using successive iterates and gradients. It supports five objective functions (**J1, J2, J5, J6, and JR**), adjustable numerical parameters, convergence and spectral step-size plots, and a numerical comparison table. Results are generated using the **Run Comparison** button, with a reminder when parameters change. The implementation also includes convergence diagnostics, numerical safeguards, and automated regression tests.
 
 [![Launch Interactive Dashboard](https://img.shields.io/badge/LAUNCH-INTERACTIVE%20DASHBOARD-2ea44f?style=for-the-badge)](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/main?urlpath=voila%2Frender%2Fgradient_methods%2Fnotebooks%2Fspectral_gradient_demo.ipynb)
 
-**Notebook:** [spectral_gradient_demo.ipynb](../notebooks/spectral_gradient_demo.ipynb)
-
 ![Spectral Gradient Dashboard](../../docs/images/spectral_gradient_dashboard.png)
 
-### Features
+The dashboard runs directly in your browser using Binder and Voilà.
+**No local installation is required.**
 
-- Five objective functions: J1, J2, J5, J6, and JR.
-- Adjustable dimension, initial step, tolerance, and maximum iterations.
-- BB1 versus BB2 convergence plots.
-- Spectral step-size histories.
-- Numerical comparison table.
-- Manual execution using the **Run Comparison** button.
-- Warning when parameters change.
+**Notebook:** [spectral_gradient_demo.ipynb](../notebooks/spectral_gradient_demo.ipynb)
 
-> **Note:** The dashboard opens without plots. Results appear only after clicking **Run Comparison**.
+> **Computational resources:** Binder provides limited CPU and memory
+> resources. Larger systems or demanding experiments may take longer
+> to execute. The first launch may also require environment initialization.
 
 ## Mathematical Formulation
 
