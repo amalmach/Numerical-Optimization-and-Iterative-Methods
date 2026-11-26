@@ -8,6 +8,8 @@ an interactive notebook.
 
 </div>
 
+---
+
 ## Interactive Steepest Descent Dashboard
 
 Explore the Steepest Descent method through interactive numerical
