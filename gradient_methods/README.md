@@ -17,6 +17,7 @@ This directory contains reusable Python solvers, numerical tests, mathematical d
 | **Fixed-Step Gradient Descent** | [Solver](fixed_step_gradient_solver/FixedStepGradient.py) | [README](fixed_step_gradient_solver/README.md) | [Notebook](notebooks/fixed_step_gradient_demo.ipynb) | [Launch Dashboard](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/main?urlpath=voila%2Frender%2Fgradient_methods%2Fnotebooks%2Ffixed_step_gradient_demo.ipynb) |
 | **Steepest Descent** | [Solver](steepest_descent_solver/SteepestDescent.py) | [README](steepest_descent_solver/README.md) | [Notebook](notebooks/steepest_descent_demo.ipynb) | [Launch Dashboard](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/main?urlpath=voila%2Frender%2Fgradient_methods%2Fnotebooks%2Fsteepest_descent_demo.ipynb) |
 | **Gradient Methods Comparison** | Fixed-Step vs Steepest Descent | — | [Notebook](notebooks/gradient_methods_comparison_demo.ipynb) | [Launch Dashboard](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/main?urlpath=voila%2Frender%2Fgradient_methods%2Fnotebooks%2Fgradient_methods_comparison_demo.ipynb) |
+| **Spectral Gradient (BB1/BB2)** | [Solver](spectral_gradient_solver/SpectralGradient.py) | [README](spectral_gradient_solver/README.md) | [Notebook](notebooks/spectral_gradient_demo.ipynb) | [Launch Dashboard](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/main?urlpath=voila%2Frender%2Fgradient_methods%2Fnotebooks%2Fspectral_gradient_demo.ipynb) |
 
 > Binder may require some time to initialize the environment on the first launch.
 
@@ -50,6 +51,19 @@ $</p>
 
 See the individual method documentation for implementation details and numerical experiments.
 
+### Spectral Gradient (Barzilai–Borwein)
+
+Uses information from successive iterates and gradients to estimate suitable step sizes.
+
+Two variants are implemented:
+
+- **BB1:** Uses the ratio of the squared step norm to the step-gradient inner product.
+- **BB2:** Uses the ratio of the step-gradient inner product to the squared gradient-difference norm.
+
+Unlike exact line search, spectral step sizes do not necessarily produce a decrease in the objective at every iteration.
+
+See the [Spectral Gradient documentation](spectral_gradient_solver/README.md) for mathematical formulas, numerical safeguards, and experiments.
+
 ## Interactive Dashboards
 
 The Voilà dashboards let you run experiments directly in your browser without installing Python locally.
@@ -80,6 +94,7 @@ From the repository root:
 ```bash
 python3 -m unittest gradient_methods.fixed_step_gradient_solver.test_fixed_step_gradient -v
 python3 -m unittest gradient_methods.steepest_descent_solver.test_steepest_descent -v
+python3 -m unittest gradient_methods.spectral_gradient_solver.test_spectral_gradient -v
 ```
 
 ## References
