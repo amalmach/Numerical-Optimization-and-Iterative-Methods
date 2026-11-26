@@ -80,3 +80,11 @@ From the repository root:
 ```bash
 python3 -m unittest gradient_methods.fixed_step_gradient_solver.test_fixed_step_gradient -v
 python3 -m unittest gradient_methods.steepest_descent_solver.test_steepest_descent -v
+
+---
+
+<div align="center">
+
+[⬅ Back to Main Repository](../README.md)
+
+</div>
