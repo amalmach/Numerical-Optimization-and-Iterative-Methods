@@ -10,7 +10,31 @@ This directory contains reusable Python solvers, numerical tests, mathematical d
 
 ---
 
-## Available Methods
+## Main idea
+
+Gradient methods minimize differentiable objective functions by iteratively moving in the direction of the negative gradient. Consider
+
+<p align="center">$\displaystyle
+\min_{x \in \mathbb{R}^n} f(x).
+$</p>
+
+Starting from an initial point \(x_0\), the general iteration is
+
+<p align="center">$\displaystyle
+x_{k+1}=x_k-\alpha_k\nabla f(x_k),
+$</p>
+
+where \(\nabla f(x_k)\) is the gradient and \(\alpha_k>0\) is the step size.
+
+Different gradient methods are distinguished by how they choose \(\alpha_k\):
+
+- **Fixed-Step Gradient Descent:** Uses a constant step size.
+- **Steepest Descent:** Determines the step size using a line-search procedure.
+- **Spectral Gradient (BB1/BB2):** Estimates the step size from differences between successive iterates and gradients.
+
+Convergence depends on the objective function and the step-size strategy. In particular, spectral gradient methods may exhibit nonmonotonic objective values.
+
+## Implemented methods
 
 | Method | Implementation | Documentation | Interactive Notebook | Voilà Dashboard |
 |---|---|---|---|---|
@@ -20,49 +44,6 @@ This directory contains reusable Python solvers, numerical tests, mathematical d
 | **Spectral Gradient (BB1/BB2)** | [Solver](spectral_gradient_solver/SpectralGradient.py) | [README](spectral_gradient_solver/README.md) | [Notebook](notebooks/spectral_gradient_demo.ipynb) | [Launch Dashboard](https://mybinder.org/v2/gh/amalmach/Numerical-Optimization-and-Iterative-Methods/main?urlpath=voila%2Frender%2Fgradient_methods%2Fnotebooks%2Fspectral_gradient_demo.ipynb) |
 
 > Binder may require some time to initialize the environment on the first launch.
-
-## Mathematical Overview
-
-Both methods minimize a differentiable objective function:
-
-<p align="center">$\displaystyle \min_{x \in \mathbb{R}^n} f(x).
-$</p>
-
-The general gradient iteration is:
-
-<p align="center">$\displaystyle x_{k+1} = x_k - \alpha_k \nabla f(x_k).
-$</p>
-
-### Fixed-Step Gradient Descent
-
-Uses a constant learning rate:
-
-<p align="center">$\displaystyle \alpha_k = \alpha > 0.
-$</p>
-
-Its convergence depends on the objective function and the chosen step size.
-
-### Steepest Descent
-
-Uses the negative gradient as the search direction, with a step length determined by the algorithm:
-
-<p align="center">$\displaystyle x_{k+1} = x_k - \alpha_k \nabla f(x_k).
-$</p>
-
-See the individual method documentation for implementation details and numerical experiments.
-
-### Spectral Gradient (Barzilai–Borwein)
-
-Uses information from successive iterates and gradients to estimate suitable step sizes.
-
-Two variants are implemented:
-
-- **BB1:** Uses the ratio of the squared step norm to the step-gradient inner product.
-- **BB2:** Uses the ratio of the step-gradient inner product to the squared gradient-difference norm.
-
-Unlike exact line search, spectral step sizes do not necessarily produce a decrease in the objective at every iteration.
-
-See the [Spectral Gradient documentation](spectral_gradient_solver/README.md) for mathematical formulas, numerical safeguards, and experiments.
 
 ## Interactive Dashboards
 
