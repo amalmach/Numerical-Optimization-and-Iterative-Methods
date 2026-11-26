@@ -94,12 +94,6 @@ The notebooks locate the repository root automatically and import the correspond
 
 For online execution, the Binder links use the dependencies defined in `.binder/requirements.txt`.
 
-### Interactive execution
-
-Open a notebook or its Voilà dashboard, configure the experiment parameters, and click **Run Comparison** or the corresponding execution button.
-
-Binder is a public, resource-limited service. Start with moderate problem dimensions and iteration budgets.
-
 ## Interpretation notes
 
 - Gradient methods use updates of the form $x_{k+1}=x_k-\alpha_k\nabla J(x_k)$, where the methods differ in their choice of step size.
@@ -109,8 +103,6 @@ Binder is a public, resource-limited service. Start with moderate problem dimens
 - Spectral gradient methods are not necessarily monotonic: the objective value may increase at some iterations.
 - A small gradient norm indicates approximate stationarity but does not, by itself, guarantee proximity to a global minimizer for arbitrary nonconvex problems.
 - Iteration counts depend on the objective function, initialization, step-size strategy, tolerance, and problem dimension.
-
-For mathematical formulations, implementation details, and numerical safeguards, consult the individual solver READMEs.
 
 ---
 
