@@ -82,6 +82,14 @@ python3 -m unittest gradient_methods.fixed_step_gradient_solver.test_fixed_step_
 python3 -m unittest gradient_methods.steepest_descent_solver.test_steepest_descent -v
 ```
 
+## References
+
+1. J. Nocedal and S. J. Wright, *Numerical Optimization*, Springer, 1999.
+
+2. S. Boyd and L. Vandenberghe, *Convex Optimization*, Cambridge University Press, 2004.
+
+3. J. R. Shewchuk, *An Introduction to the Conjugate Gradient Method Without the Agonizing Pain*, 1994.
+   
 ---
 
 <div align="center">

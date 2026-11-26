@@ -234,9 +234,9 @@ The experiments compare different fixed step sizes and demonstrate how they infl
 
 ### References
 
-1. J. Nocedal and S. J. Wright, *Numerical Optimization*, 2nd ed., Springer, 2006.
+1. J. Nocedal and S. J. Wright, *Numerical Optimization*, Springer, 1999.
 2. D. P. Bertsekas, *Nonlinear Programming*, 3rd ed., Athena Scientific, 2016.
-3. Y. Nesterov, *Introductory Lectures on Convex Optimization: A Basic Course*, Kluwer Academic Publishers, 2004.
+3. Y. Nesterov, *Introductory Lectures on Convex Optimization: A Basic Course*, Springer Science & Business Media, 2013.
 
 ---
 
