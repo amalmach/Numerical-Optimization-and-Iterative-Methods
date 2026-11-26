@@ -166,3 +166,11 @@ shared reproducible-system and plotting helpers in
 1. J. Nocedal and S. J. Wright (2006), *Numerical Optimization*, 2nd ed., Springer.
 2. Y. Saad (2003), *Iterative Methods for Sparse Linear Systems*, 2nd ed., SIAM.
 3. J. R. Shewchuk (1994), *An Introduction to the Conjugate Gradient Method Without the Agonizing Pain*.
+
+---
+
+<div align="center">
+
+[⬅ Back to Gradient Methods](../README.md)
+
+</div>
