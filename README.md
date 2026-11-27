@@ -23,6 +23,7 @@ Each section contains numerical implementations, scientific documentation, and c
 | Category | Numerical Methods | Documentation |
 |:---|:---|:---:|
 | **Linear Systems** | Krylov subspace methods | [Explore](krylov_methods/README.md) |
+| **Direct Methods** | LU factorization with partial pivoting | [Explore](direct_methods/README.md) |
 | **Gradient Optimization** | Gradient methods | [Explore](gradient_methods/README.md) |
 | **Global Optimization** | Efficient Global Optimization (EGO) | [Explore](global_optimization/README.md) |
 | **Nonlinear Systems** | Newton–GMRES methods | [Explore](nonlinear_solvers/README.md) |
