@@ -22,6 +22,10 @@ env/
 *.pdf
 *.svg
 
+# Allow dashboard screenshots used in documentation
+!docs/images/
+!docs/images/*.png
+
 # Temporary files
 *.log
 *.tmp
@@ -29,3 +33,6 @@ env/
 # Editor files
 .vscode/
 .idea/
+
+# Jupyter temporary files
+.virtual_documents/
