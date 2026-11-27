@@ -75,11 +75,10 @@ The inner GMRES relative tolerance can vary with nonlinear progress. The include
 The demo solves
 
 <p align="center">
-$\displaystyle F(x_1,x_2)=
-\begin{pmatrix}
-x_1\cos(x_2)-4\\
-x_2(x_1-1)-5
-\end{pmatrix}=0,$
+  <img
+    src="https://latex.codecogs.com/svg.image?F%28x_1%2Cx_2%29%3D%5Cbegin%7Bpmatrix%7Dx_1%5Ccos%28x_2%29-4%5C%5Cx_2%28x_1-1%29-5%5Cend%7Bpmatrix%7D%3D0"
+    alt="F(x1,x2) = (x1 cos(x2) - 4, x2(x1 - 1) - 5)^T = 0"
+  >
 </p>
 
 using an adjustable starting point and tolerance. The default starting point is $x_0=(1,1)^T$.
@@ -110,7 +109,13 @@ The returned `NewtonKrylovResult` includes the solution, convergence status, non
 
 ## Numerical Safeguards and Limitations
 
-The solver checks initial inputs and finite function values, verifies the reconstructed linear correction, and uses backtracking on $\tfrac12\|F(x)\|_2^2$. Convergence is not guaranteed from arbitrary starting points. Finite-difference Jacobian products introduce approximation error; the current explicit-Jacobian interface expects dense arrays. GMRES counts are callback iterations, **not** runtime or matrix–vector-product counts.
+The solver checks initial inputs and finite function values, verifies the reconstructed linear correction, and uses backtracking on $\tfrac12\|F(x)\|_2^2$.
+
+Convergence is not guaranteed from arbitrary starting points.
+
+Finite-difference Jacobian products introduce approximation error; the current explicit-Jacobian interface expects dense arrays.
+
+GMRES counts are callback iterations, **not** runtime or matrix–vector-product counts.
 
 ## Running the Examples and Tests
 
@@ -132,8 +137,6 @@ For the dashboard with hidden code cells locally, launch **Voilà from the repos
 ```bash
 python -m voila nonlinear_solvers/notebooks/newton_krylov_demo.ipynb
 ```
-
-JupyterLab remains available for readers who want to inspect the source notebook.
 
 
 ## References
