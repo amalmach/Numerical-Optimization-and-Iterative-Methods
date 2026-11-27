@@ -113,20 +113,6 @@ The additional linear term `5*x1` distinguishes this objective from the classica
 
 <p align="center"><img src="https://latex.codecogs.com/svg.image?%5Cdisplaystyle%20x_1%3D15y_1-5%2C%5Cquad%20x_2%3D15y_2%2C%5Cquad%20%28y_1%2Cy_2%29%5Cin%5B0%2C1%5D%5E2" alt="Branin domain normalization"></p>
 
-## 4. Numerical Results
-
-The comparison used `n_initial=9`, `max_evaluations=30` (21 sequential iterations), `theta=0.2`, `sigma=1.0`, `nugget=1e-8`, `xi=0`, `n_restarts=10`, and `random_state=42`.
-
-| Metric | Fixed EGO | Adaptive EGO |
-|:---|---:|---:|
-| Initial best value | -11.92965549 | -11.92965549 |
-| Final best value | -16.63194867 | **-16.63986869** |
-| Best normalized `y1` | 0.09044073 | 0.08933318 |
-| Best normalized `y2` | 0.89703340 | 0.90204874 |
-| Objective evaluations | 30 | 30 |
-
-Adaptive EGO obtained a lower final objective value by approximately `0.00792002` **in this single-seed experiment**. This does not prove that adaptive estimation is superior in general or that either run found the global minimizer.
-
 ## 5. Python Implementation
 
 | File | Purpose |
@@ -187,9 +173,9 @@ The current suite includes **17 passing tests**, covering benchmark calculations
 
 ## 7. References
 
-1. Jones, D. R., Schonlau, M., and Welch, W. J. (1998). *Efficient Global Optimization of Expensive Black-Box Functions.* Journal of Global Optimization, **13**, 455–492.
+1. Jones, D. R., Schonlau, M., and Welch, W. J. (1998). *Efficient Global Optimization of Expensive Black-Box Functions.* Journal of Global Optimization, 13, 455–492.
 2. Rasmussen, C. E., and Williams, C. K. I. (2006). *Gaussian Processes for Machine Learning.* MIT Press.
-3. McKay, M. D., Beckman, R. J., and Conover, W. J. (1979). *A Comparison of Three Methods for Selecting Values of Input Variables in the Analysis of Output from a Computer Code.* Technometrics, **21**(2), 239–245.
+3. McKay, M. D., Beckman, R. J., and Conover, W. J. (2000). *A Comparison of Three Methods for Selecting Values of Input Variables in the Analysis of Output from a Computer Code.* Technometrics, 42(1), 55-61..
 
 ---
 
