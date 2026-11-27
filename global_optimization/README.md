@@ -32,28 +32,6 @@ sequential experimental design.
 
 ---
 
-## Efficient Global Optimization
-
-Efficient Global Optimization (EGO) is a sequential, surrogate-based
-optimization method designed for problems where evaluating the
-objective function may be computationally expensive.
-
-The implementation combines:
-
-- Gaussian process regression with a squared-exponential kernel.
-- Latin hypercube sampling for the initial experimental design.
-- Expected Improvement for selecting new evaluation points.
-- Multistart acquisition optimization using L-BFGS-B.
-- Optional maximum-likelihood hyperparameter estimation.
-- Convergence tracking and reproducible numerical experiments.
-
-The implemented benchmark is a modified version of the
-two-dimensional Branin function.
-
-**[Explore the EGO implementation →](ego/)**
-
----
-
 ## Interactive Notebooks
 
 | Method | Notebook |
@@ -83,28 +61,6 @@ python -m global_optimization.ego.example
 
 ```bash
 python -m pytest -v global_optimization/ego/test_ego.py
-```
-
----
-
-## Repository Structure
-
-```text
-global_optimization/
-├── __init__.py
-├── README.md
-├── ego/
-│   ├── __init__.py
-│   ├── README.md
-│   ├── acquisition.py
-│   ├── benchmarks.py
-│   ├── ego.py
-│   ├── example.py
-│   ├── gaussian_process.py
-│   ├── hyperparameters.py
-│   └── test_ego.py
-└── notebooks/
-    └── ego_demo.ipynb
 ```
 
 ---
