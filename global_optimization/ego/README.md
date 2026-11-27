@@ -20,7 +20,7 @@ Compare fixed and adaptive EGO through an interactive Jupyter/Voilà dashboard.
 
 ![EGO dashboard preview](../../docs/images/ego_dashboard.png)
 
-*The Binder launch button and screenshot will work after the notebook and image have been added and deployed.* No local installation is needed to use the deployed dashboard. [Notebook source](../notebooks/ego_demo.ipynb).
+No local installation is needed to use the deployed dashboard. [Notebook source](../notebooks/ego_demo.ipynb).
 
 ---
 
