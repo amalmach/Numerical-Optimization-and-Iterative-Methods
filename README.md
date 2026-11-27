@@ -28,6 +28,7 @@ Each section contains numerical implementations, scientific documentation, and c
 | **Global Optimization** | Efficient Global Optimization (EGO) | [Explore](global_optimization/README.md) |
 | **Nonlinear Systems** | Newton–GMRES methods | [Explore](nonlinear_solvers/README.md) |
 | **Optimization Benchmarks** | Rosenbrock function | [Explore](optimization_benchmarks/README.md) |
+| **Sampling Methods** | 1D and 2D acceptance–rejection sampling | [Explore](sampling_methods/README.md) |
 | **Scientific Computing** | Numerical sampling and NumPy/SciPy utilities | [Explore](scientific_utilities/README.md) |
 
 
